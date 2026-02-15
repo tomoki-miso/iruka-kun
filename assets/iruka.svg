@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Dolphin body -->
+  <ellipse cx="100" cy="110" rx="60" ry="35" fill="#4A90D9" stroke="#2C5F8A" stroke-width="2"/>
+  <!-- Belly -->
+  <ellipse cx="100" cy="118" rx="45" ry="22" fill="#B8D4F0"/>
+  <!-- Head -->
+  <ellipse cx="52" cy="95" rx="30" ry="28" fill="#4A90D9" stroke="#2C5F8A" stroke-width="2"/>
+  <!-- Head belly -->
+  <ellipse cx="55" cy="102" rx="20" ry="18" fill="#B8D4F0"/>
+  <!-- Beak/nose -->
+  <ellipse cx="25" cy="98" rx="15" ry="8" fill="#4A90D9" stroke="#2C5F8A" stroke-width="2"/>
+  <ellipse cx="27" cy="101" rx="10" ry="5" fill="#B8D4F0"/>
+  <!-- Eye -->
+  <circle cx="48" cy="88" r="5" fill="white"/>
+  <circle cx="49" cy="87" r="3" fill="#1a1a2e"/>
+  <circle cx="50" cy="86" r="1" fill="white"/>
+  <!-- Smile -->
+  <path d="M 30 100 Q 35 106 42 104" fill="none" stroke="#2C5F8A" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Dorsal fin -->
+  <path d="M 90 75 Q 95 50 110 65 Q 105 75 100 78" fill="#4A90D9" stroke="#2C5F8A" stroke-width="2"/>
+  <!-- Tail -->
+  <path d="M 155 100 Q 175 80 190 85 Q 178 100 185 115 Q 170 108 155 115" fill="#4A90D9" stroke="#2C5F8A" stroke-width="2"/>
+  <!-- Pectoral fin -->
+  <path d="M 70 120 Q 65 140 80 145 Q 82 135 78 122" fill="#3A7BC8" stroke="#2C5F8A" stroke-width="1.5"/>
+  <!-- Blowhole water -->
+  <path d="M 60 70 Q 58 55 52 45" fill="none" stroke="#87CEEB" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  <path d="M 60 70 Q 62 52 68 42" fill="none" stroke="#87CEEB" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  <circle cx="50" cy="42" r="3" fill="#87CEEB" opacity="0.5"/>
+  <circle cx="70" cy="38" r="2.5" fill="#87CEEB" opacity="0.5"/>
+</svg>
