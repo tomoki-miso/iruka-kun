@@ -4,14 +4,19 @@ import AppKit
 final class StatusBarController {
     private var statusItem: NSStatusItem?
     private var stateMenuItem: NSMenuItem?
+    private var workToggleMenuItem: NSMenuItem?
+    private var todayTotalMenuItem: NSMenuItem?
 
     var onToggleCharacter: (() -> Void)?
     var onOpenSettings: (() -> Void)?
     var onQuit: (() -> Void)?
+    var onToggleWork: (() -> Void)?
     var currentStateProvider: (() -> CharacterState)?
+    var workStateProvider: (() -> WorkTracker.State)?
+    var todayTotalProvider: (() -> TimeInterval)?
 
     func setup() {
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         guard let button = statusItem?.button else { return }
         button.image = NSImage(systemSymbolName: "fish.fill", accessibilityDescription: "iruka-kun")
@@ -32,9 +37,59 @@ final class StatusBarController {
         stateMenuItem?.title = "状態: \(label)"
     }
 
+    func updateTimerDisplay(elapsed: TimeInterval) {
+        guard let button = statusItem?.button else { return }
+        let workState = workStateProvider?() ?? .idle
+
+        switch workState {
+        case .tracking:
+            button.title = " \(formatTime(elapsed))"
+        case .paused:
+            button.title = " \(formatTime(elapsed)) (休止中)"
+        case .idle:
+            button.title = ""
+        }
+    }
+
+    func updateWorkMenu() {
+        let workState = workStateProvider?() ?? .idle
+        switch workState {
+        case .idle:
+            workToggleMenuItem?.title = "▶ 作業を開始"
+        case .tracking:
+            workToggleMenuItem?.title = "⏸ 作業を中断"
+        case .paused:
+            workToggleMenuItem?.title = "⏸ 作業を中断"
+        }
+
+        let total = todayTotalProvider?() ?? 0
+        todayTotalMenuItem?.title = "今日の合計: \(formatTime(total))"
+    }
+
+    private func formatTime(_ interval: TimeInterval) -> String {
+        let totalSeconds = Int(interval)
+        let hours = totalSeconds / 3600
+        let minutes = (totalSeconds % 3600) / 60
+        let seconds = totalSeconds % 60
+        return String(format: "%d:%02d:%02d", hours, minutes, seconds)
+    }
+
     private func rebuildMenu() {
         let menu = NSMenu()
 
+        // Work tracker section
+        let workItem = NSMenuItem(title: "▶ 作業を開始", action: #selector(toggleWork), keyEquivalent: "w")
+        workToggleMenuItem = workItem
+        menu.addItem(workItem)
+
+        let totalItem = NSMenuItem(title: "今日の合計: 0:00:00", action: nil, keyEquivalent: "")
+        totalItem.isEnabled = false
+        todayTotalMenuItem = totalItem
+        menu.addItem(totalItem)
+
+        menu.addItem(NSMenuItem.separator())
+
+        // Character section
         menu.addItem(NSMenuItem(title: "イルカを表示/非表示", action: #selector(toggleCharacter), keyEquivalent: "i"))
         menu.addItem(NSMenuItem.separator())
 
@@ -56,6 +111,7 @@ final class StatusBarController {
         statusItem?.menu = menu
     }
 
+    @objc private func toggleWork() { onToggleWork?() }
     @objc private func toggleCharacter() { onToggleCharacter?() }
     @objc private func openSettings() { onOpenSettings?() }
     @objc private func quit() { onQuit?() }
