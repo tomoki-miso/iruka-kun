@@ -46,12 +46,20 @@ final class WorkTimerOverlay {
         parentWindow.addChildWindow(window, ordered: .below)
     }
 
-    func update(elapsed: TimeInterval, state: WorkTracker.State) {
+    func update(elapsed: TimeInterval, state: WorkTracker.State, preset: String? = nil) {
         switch state {
         case .tracking:
-            label.stringValue = formatTime(elapsed)
+            if let preset {
+                label.stringValue = "\(preset) \(formatTime(elapsed))"
+            } else {
+                label.stringValue = formatTime(elapsed)
+            }
         case .paused:
-            label.stringValue = "\(formatTime(elapsed)) ⏸"
+            if let preset {
+                label.stringValue = "\(preset) \(formatTime(elapsed)) ⏸"
+            } else {
+                label.stringValue = "\(formatTime(elapsed)) ⏸"
+            }
         case .idle:
             window.orderOut(nil)
             return
