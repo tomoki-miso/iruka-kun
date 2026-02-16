@@ -1,6 +1,7 @@
 @MainActor
 final class StateMachine {
     private(set) var currentState: CharacterState = .idle
+    var baseState: CharacterState = .idle
     var onStateChanged: ((CharacterState) -> Void)?
 
     func handleEvent(_ event: CharacterEvent) {
@@ -34,11 +35,11 @@ final class StateMachine {
         case (.idle, .idleTimeout):
             return .bored
 
-        // Temporary states expire back to idle
+        // Temporary states expire back to base state
         case (.happy, .temporaryStateExpired),
              (.surprised, .temporaryStateExpired),
              (.bored, .temporaryStateExpired):
-            return .idle
+            return baseState
 
         default:
             return currentState

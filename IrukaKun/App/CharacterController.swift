@@ -9,16 +9,27 @@ final class CharacterController {
     private let bubbleView = BubbleView()
     private let soundPlayer = SoundPlayer()
     private let workTimerOverlay = WorkTimerOverlay()
+    private let cpuMonitor = CPUMonitor()
 
     private var dialogueTimer: Timer?
     private var idleTimer: Timer?
     private var stateRevertTimer: Timer?
+    private var floatTimer: Timer?
+    private var cpuTimer: Timer?
     private var lastTimeOfDay: TimeOfDay?
+    private var lastCPULevel: CPUMonitor.Level = .low
+    private var floatPhase: Double = 0
+    private var baseWindowOrigin: CGPoint = .zero
+    private var isFloating = false
 
     // Intervals
     private let dialogueInterval: TimeInterval = 900 // 15 minutes
     private let idleTimeout: TimeInterval = 1800     // 30 minutes
     private let temporaryStateDuration: TimeInterval = 3.0
+
+    // Floating
+    private let floatAmplitude: CGFloat = 4.0
+    private let floatPeriod: Double = 2.5
 
     var isCharacterVisible: Bool { characterWindow.isVisible }
     var currentState: CharacterState { stateMachine.currentState }
@@ -30,6 +41,7 @@ final class CharacterController {
         setupCallbacks()
         setupTimers()
         workTimerOverlay.attach(to: characterWindow)
+        startFloating()
     }
 
     func updateWorkTimer(elapsed: TimeInterval, state: WorkTracker.State) {
@@ -66,11 +78,13 @@ final class CharacterController {
             self?.handleClick()
         }
         characterView.onDragStarted = { [weak self] in
+            self?.pauseFloating()
             self?.stateMachine.handleEvent(.dragStarted)
             self?.showDialogueForEvent(.dragStarted)
             self?.scheduleStateRevert()
         }
-        characterView.onDragEnded = { [weak self] _ in
+        characterView.onDragEnded = { [weak self] position in
+            self?.resumeFloating(from: position)
             self?.characterWindow.savePosition()
             self?.resetIdleTimer()
         }
@@ -96,6 +110,38 @@ final class CharacterController {
 
         // Initial time check
         checkTimeOfDay()
+
+        // CPU monitoring (every 5 seconds)
+        cpuTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                self?.checkCPU()
+            }
+        }
+    }
+
+    // MARK: - CPU Monitoring
+
+    private func checkCPU() {
+        let (_, level) = cpuMonitor.sample()
+        guard level != lastCPULevel else { return }
+        lastCPULevel = level
+
+        let newBaseState: CharacterState
+        switch level {
+        case .low:      newBaseState = .idle
+        case .medium:   newBaseState = .happy
+        case .high:     newBaseState = .surprised
+        }
+
+        stateMachine.baseState = newBaseState
+
+        // If currently in a base-like state, transition immediately
+        let current = stateMachine.currentState
+        if current == .idle || current == .happy || current == .surprised || current == .bored {
+            if current != newBaseState && current != .sleeping {
+                stateMachine.handleEvent(.temporaryStateExpired)
+            }
+        }
     }
 
     // MARK: - Event Handling
@@ -136,6 +182,36 @@ final class CharacterController {
         } else if stateMachine.currentState == .sleeping {
             stateMachine.handleEvent(.dayTime)
         }
+    }
+
+    // MARK: - Floating Animation
+
+    private func startFloating() {
+        baseWindowOrigin = characterWindow.frame.origin
+        isFloating = true
+        floatTimer = Timer.scheduledTimer(withTimeInterval: 1.0 / 30.0, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                self?.updateFloat()
+            }
+        }
+    }
+
+    private func updateFloat() {
+        guard isFloating else { return }
+        floatPhase += (2 * .pi) / (30.0 * floatPeriod)
+        if floatPhase > 2 * .pi { floatPhase -= 2 * .pi }
+        let offset = CGFloat(sin(floatPhase)) * floatAmplitude
+        characterWindow.setFrameOrigin(CGPoint(x: baseWindowOrigin.x, y: baseWindowOrigin.y + offset))
+    }
+
+    private func pauseFloating() {
+        isFloating = false
+    }
+
+    private func resumeFloating(from newOrigin: CGPoint) {
+        baseWindowOrigin = newOrigin
+        floatPhase = 0
+        isFloating = true
     }
 
     // MARK: - Dialogue

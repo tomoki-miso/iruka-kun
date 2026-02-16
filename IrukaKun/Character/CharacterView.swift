@@ -7,10 +7,6 @@ final class CharacterView: NSView {
     private var isDragging = false
     private var dragOffset = CGPoint.zero
 
-    // ぷかぷか浮遊アニメーション設定
-    private let floatAmplitude: CGFloat = 6.0   // 上下の振れ幅(px)
-    private let floatDuration: CFTimeInterval = 2.5  // 1往復の時間(秒)
-
     var onClicked: (() -> Void)?
     var onDragStarted: (() -> Void)?
     var onDragEnded: ((CGPoint) -> Void)?
@@ -19,7 +15,6 @@ final class CharacterView: NSView {
         super.init(frame: frameRect)
         setupLayer()
         setupAnimator()
-        startFloatingAnimation()
     }
 
     required init?(coder: NSCoder) {
@@ -49,44 +44,11 @@ final class CharacterView: NSView {
 
     override func layout() {
         super.layout()
-        let charSize = CharacterWindow.characterSize
-        imageLayer.frame = CGRect(
-            x: 0, y: 0,
-            width: min(bounds.width, charSize.width),
-            height: min(bounds.height, charSize.height)
-        )
+        imageLayer.frame = bounds
     }
 
     func setSprite(_ image: NSImage) {
         imageLayer.contents = image
-    }
-
-    // MARK: - Floating Animation
-
-    private func startFloatingAnimation() {
-        let animation = CABasicAnimation(keyPath: "transform.translation.y")
-        animation.fromValue = -floatAmplitude
-        animation.toValue = floatAmplitude
-        animation.duration = floatDuration / 2.0
-        animation.autoreverses = true
-        animation.repeatCount = .infinity
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        imageLayer.add(animation, forKey: "floating")
-    }
-
-    private func pauseFloatingAnimation() {
-        let pausedTime = imageLayer.convertTime(CACurrentMediaTime(), from: nil)
-        imageLayer.speed = 0
-        imageLayer.timeOffset = pausedTime
-    }
-
-    private func resumeFloatingAnimation() {
-        let pausedTime = imageLayer.timeOffset
-        imageLayer.speed = 1
-        imageLayer.timeOffset = 0
-        imageLayer.beginTime = 0
-        let timeSincePause = imageLayer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
-        imageLayer.beginTime = timeSincePause
     }
 
     // MARK: - Hit Testing
@@ -144,7 +106,6 @@ final class CharacterView: NSView {
     override func mouseDragged(with event: NSEvent) {
         if !isDragging {
             isDragging = true
-            pauseFloatingAnimation()
             onDragStarted?()
         }
         guard let window else { return }
@@ -161,7 +122,6 @@ final class CharacterView: NSView {
             guard let window else { return }
             onDragEnded?(window.frame.origin)
             isDragging = false
-            resumeFloatingAnimation()
         } else {
             onClicked?()
         }
