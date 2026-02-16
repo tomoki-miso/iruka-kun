@@ -4,6 +4,7 @@ import AppKit
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private let statusBarController = StatusBarController()
     private let settingsWindowController = SettingsWindowController()
+    private let workHistoryWindowController = WorkHistoryWindowController()
     private let workHistoryStore = WorkHistoryStore()
     private var workTracker: WorkTracker?
     private var characterController: CharacterController?
@@ -42,6 +43,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         statusBarController.onOpenSettings = { [weak self] in
             self?.settingsWindowController.show()
+        }
+        statusBarController.onShowHistory = { [weak self] in
+            guard let self else { return }
+            self.workHistoryWindowController.show(historyStore: self.workHistoryStore)
         }
         statusBarController.presetsProvider = { [weak self] in
             self?.workHistoryStore.presets ?? []

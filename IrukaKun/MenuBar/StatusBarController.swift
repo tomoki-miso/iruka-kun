@@ -20,6 +20,7 @@ final class StatusBarController {
     var todayBreakdownProvider: (() -> [String: TimeInterval])?
     var onSelectPreset: ((String) -> Void)?
     var onAddPreset: ((String) -> Void)?
+    var onShowHistory: (() -> Void)?
 
     func setup() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -138,6 +139,7 @@ final class StatusBarController {
         menu.addItem(stateItem)
 
         menu.addItem(NSMenuItem.separator())
+        menu.addItem(NSMenuItem(title: "作業履歴...", action: #selector(showHistory), keyEquivalent: "h"))
         menu.addItem(NSMenuItem(title: "設定...", action: #selector(openSettings), keyEquivalent: ","))
         menu.addItem(NSMenuItem(title: "iruka-kun について", action: #selector(showAbout), keyEquivalent: ""))
         menu.addItem(NSMenuItem.separator())
@@ -195,6 +197,7 @@ final class StatusBarController {
 
     @objc private func toggleWork() { onToggleWork?() }
     @objc private func toggleCharacter() { onToggleCharacter?() }
+    @objc private func showHistory() { onShowHistory?() }
     @objc private func openSettings() { onOpenSettings?() }
     @objc private func quit() { onQuit?() }
 
