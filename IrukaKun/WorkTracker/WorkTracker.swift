@@ -10,6 +10,7 @@ final class WorkTracker {
 
     private(set) var state: State = .idle
     private(set) var elapsedTime: TimeInterval = 0
+    var currentPreset: String?
 
     var onTick: ((TimeInterval) -> Void)?
     var onStateChanged: ((State) -> Void)?
@@ -31,6 +32,15 @@ final class WorkTracker {
         historyStore.todayTotal() + (state != .idle ? elapsedTime : 0)
     }
 
+    func switchPreset(to preset: String) {
+        if state != .idle, elapsedTime > 0 {
+            historyStore.addDuration(elapsedTime, for: sessionStartDate ?? Date(), preset: currentPreset)
+            elapsedTime = 0
+            sessionStartDate = Date()
+        }
+        currentPreset = preset
+    }
+
     func start() {
         guard state == .idle else { return }
         elapsedTime = 0
@@ -46,7 +56,7 @@ final class WorkTracker {
         stopTickTimer()
         stopEventMonitor()
         if elapsedTime > 0 {
-            historyStore.addDuration(elapsedTime, for: sessionStartDate ?? Date())
+            historyStore.addDuration(elapsedTime, for: sessionStartDate ?? Date(), preset: currentPreset)
         }
         elapsedTime = 0
         sessionStartDate = nil
@@ -83,7 +93,7 @@ final class WorkTracker {
             let today = Calendar.current.startOfDay(for: Date())
             if startDay != today {
                 // Day changed — save previous day and reset
-                historyStore.addDuration(elapsedTime, for: startDate)
+                historyStore.addDuration(elapsedTime, for: startDate, preset: currentPreset)
                 elapsedTime = 0
                 sessionStartDate = Date()
             }

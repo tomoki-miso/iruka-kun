@@ -92,4 +92,46 @@ final class WorkTrackerTests: XCTestCase {
         tracker.stop()
         XCTAssertEqual(tracker.elapsedTime, 0)
     }
+
+    func testCurrentPresetDefault() {
+        XCTAssertNil(tracker.currentPreset)
+    }
+
+    func testSetCurrentPreset() {
+        tracker.currentPreset = "ProjectA"
+        XCTAssertEqual(tracker.currentPreset, "ProjectA")
+    }
+
+    func testStopSavesToPreset() {
+        tracker.currentPreset = "ProjectA"
+        tracker.start()
+        let expectation = expectation(description: "tick")
+        tracker.onTick = { elapsed in
+            if elapsed >= 1.0 { expectation.fulfill() }
+        }
+        wait(for: [expectation], timeout: 3.0)
+        tracker.stop()
+        XCTAssertGreaterThan(historyStore.totalDuration(for: Date(), preset: "ProjectA"), 0)
+    }
+
+    func testSwitchPresetSavesCurrentAndResets() {
+        tracker.currentPreset = "A"
+        tracker.start()
+        let expectation = expectation(description: "tick")
+        tracker.onTick = { elapsed in
+            if elapsed >= 1.0 { expectation.fulfill() }
+        }
+        wait(for: [expectation], timeout: 3.0)
+        tracker.switchPreset(to: "B")
+        XCTAssertEqual(tracker.currentPreset, "B")
+        XCTAssertEqual(tracker.elapsedTime, 0)
+        XCTAssertEqual(tracker.state, .tracking)
+        XCTAssertGreaterThan(historyStore.totalDuration(for: Date(), preset: "A"), 0)
+    }
+
+    func testSwitchPresetWhileIdleJustSetsPreset() {
+        tracker.switchPreset(to: "B")
+        XCTAssertEqual(tracker.currentPreset, "B")
+        XCTAssertEqual(tracker.state, .idle)
+    }
 }
