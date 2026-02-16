@@ -3,9 +3,10 @@ import AppKit
 @MainActor
 final class CharacterWindow: NSWindow {
     static let characterSize = CGSize(width: 128, height: 128)
+    private let positionStore = PositionStore()
 
     init() {
-        let initialFrame = Self.defaultFrame()
+        let initialFrame = NSRect(origin: .zero, size: Self.characterSize)
         super.init(
             contentRect: initialFrame,
             styleMask: .borderless,
@@ -20,14 +21,29 @@ final class CharacterWindow: NSWindow {
         collectionBehavior = [.canJoinAllSpaces, .stationary]
         isReleasedWhenClosed = false
         ignoresMouseEvents = false
+
+        restorePosition()
     }
 
     override var canBecomeKey: Bool { true }
 
-    private static func defaultFrame() -> NSRect {
+    func savePosition() {
+        positionStore.save(position: frame.origin)
+    }
+
+    private func restorePosition() {
+        if let saved = positionStore.loadPosition() {
+            setFrameOrigin(saved)
+        } else {
+            setFrameOrigin(Self.defaultOrigin())
+        }
+    }
+
+    private static func defaultOrigin() -> CGPoint {
         let screenFrame = NSScreen.main?.visibleFrame ?? NSRect(x: 0, y: 0, width: 800, height: 600)
-        let x = screenFrame.maxX - characterSize.width - 40
-        let y = screenFrame.minY + 40
-        return NSRect(origin: CGPoint(x: x, y: y), size: characterSize)
+        return CGPoint(
+            x: screenFrame.maxX - characterSize.width - 40,
+            y: screenFrame.minY + 40
+        )
     }
 }
