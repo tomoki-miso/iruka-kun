@@ -9,12 +9,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var characterController: CharacterController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        NSLog("[iruka-kun] applicationDidFinishLaunching called")
         characterController = CharacterController()
         characterController?.showCharacter()
 
         workTracker = WorkTracker(historyStore: workHistoryStore)
         setupMenuBar()
         setupWorkTracker()
+        NSLog("[iruka-kun] setup complete")
     }
 
     func applicationWillTerminate(_ notification: Notification) {
@@ -55,10 +57,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupWorkTracker() {
         workTracker?.onTick = { [weak self] elapsed in
             self?.statusBarController.updateTimerDisplay(elapsed: elapsed)
+            self?.characterController?.updateWorkTimer(
+                elapsed: elapsed,
+                state: self?.workTracker?.state ?? .idle
+            )
         }
         workTracker?.onStateChanged = { [weak self] _ in
             self?.statusBarController.updateWorkMenu()
-            self?.statusBarController.updateTimerDisplay(elapsed: self?.workTracker?.elapsedTime ?? 0)
+            let elapsed = self?.workTracker?.elapsedTime ?? 0
+            self?.statusBarController.updateTimerDisplay(elapsed: elapsed)
+            self?.characterController?.updateWorkTimer(
+                elapsed: elapsed,
+                state: self?.workTracker?.state ?? .idle
+            )
         }
     }
 

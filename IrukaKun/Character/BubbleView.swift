@@ -6,6 +6,7 @@ final class BubbleView: NSView {
     private let padding: CGFloat = 10
     private let tailHeight: CGFloat = 8
     private var fadeTimer: Timer?
+    private var originalWindowHeight: CGFloat?
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -56,13 +57,21 @@ final class BubbleView: NSView {
         isHidden = false
         parentWindow.contentView?.addSubview(self)
 
+        // Restore window to original size before re-expanding
+        if let originalHeight = originalWindowHeight {
+            var windowFrame = parentWindow.frame
+            windowFrame.size.height = originalHeight
+            parentWindow.setFrame(windowFrame, display: false)
+            originalWindowHeight = nil
+        }
+
         // Adjust window size to fit bubble
         var windowFrame = parentWindow.frame
         let requiredTop = y + size.height
-        if requiredTop > windowFrame.maxY {
-            let extraHeight = requiredTop - windowFrame.maxY
+        if requiredTop > windowFrame.size.height {
+            originalWindowHeight = windowFrame.size.height
+            let extraHeight = requiredTop - windowFrame.size.height
             windowFrame.size.height += extraHeight
-            windowFrame.origin.y -= extraHeight
             parentWindow.setFrame(windowFrame, display: true)
         }
 
@@ -81,6 +90,13 @@ final class BubbleView: NSView {
             self.animator().alphaValue = 0
         }, completionHandler: { [weak self] in
             self?.isHidden = true
+            if let originalHeight = self?.originalWindowHeight,
+               let window = self?.window {
+                var frame = window.frame
+                frame.size.height = originalHeight
+                window.setFrame(frame, display: true)
+                self?.originalWindowHeight = nil
+            }
             self?.removeFromSuperview()
         })
     }

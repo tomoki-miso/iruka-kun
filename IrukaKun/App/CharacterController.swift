@@ -8,6 +8,7 @@ final class CharacterController {
     private let characterView: CharacterView
     private let bubbleView = BubbleView()
     private let soundPlayer = SoundPlayer()
+    private let workTimerOverlay = WorkTimerOverlay()
 
     private var dialogueTimer: Timer?
     private var idleTimer: Timer?
@@ -28,6 +29,11 @@ final class CharacterController {
         characterWindow.contentView = characterView
         setupCallbacks()
         setupTimers()
+        workTimerOverlay.attach(to: characterWindow)
+    }
+
+    func updateWorkTimer(elapsed: TimeInterval, state: WorkTracker.State) {
+        workTimerOverlay.update(elapsed: elapsed, state: state)
     }
 
     func showCharacter() {
@@ -146,7 +152,7 @@ final class CharacterController {
     }
 
     private func showBubble(text: String) {
-        let charFrame = characterView.frame
+        let charFrame = NSRect(origin: .zero, size: CharacterWindow.characterSize)
         bubbleView.show(text: text, relativeTo: charFrame, in: characterWindow)
     }
 }

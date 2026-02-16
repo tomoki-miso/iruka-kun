@@ -17,11 +17,18 @@ final class StatusBarController {
 
     func setup() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        NSLog("[iruka-kun] statusItem created: \(statusItem != nil)")
 
-        guard let button = statusItem?.button else { return }
-        button.image = NSImage(systemSymbolName: "fish.fill", accessibilityDescription: "iruka-kun")
+        guard let button = statusItem?.button else {
+            NSLog("[iruka-kun] button is nil!")
+            return
+        }
+        let img = NSImage(systemSymbolName: "fish.fill", accessibilityDescription: "iruka-kun")
+        NSLog("[iruka-kun] fish.fill image: \(img != nil)")
+        button.image = img
 
         rebuildMenu()
+        NSLog("[iruka-kun] menu built")
     }
 
     func updateStateDisplay() {
