@@ -15,6 +15,12 @@ final class StatusBarController {
     var workStateProvider: (() -> WorkTracker.State)?
     var todayTotalProvider: (() -> TimeInterval)?
 
+    var presetsProvider: (() -> [String])?
+    var currentPresetProvider: (() -> String?)?
+    var todayBreakdownProvider: (() -> [String: TimeInterval])?
+    var onSelectPreset: ((String) -> Void)?
+    var onAddPreset: ((String) -> Void)?
+
     func setup() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         NSLog("[iruka-kun] statusItem created: \(statusItem != nil)")
@@ -71,6 +77,24 @@ final class StatusBarController {
 
         let total = todayTotalProvider?() ?? 0
         todayTotalMenuItem?.title = "今日の合計: \(formatTime(total))"
+
+        // Update breakdown submenu
+        let breakdown = todayBreakdownProvider?() ?? [:]
+        if !breakdown.isEmpty {
+            let submenu = NSMenu()
+            for (preset, duration) in breakdown.sorted(by: { $0.key < $1.key }) {
+                let displayName = preset == "__none__" ? "未分類" : preset
+                let item = NSMenuItem(title: "\(displayName): \(formatTime(duration))", action: nil, keyEquivalent: "")
+                item.isEnabled = false
+                submenu.addItem(item)
+            }
+            todayTotalMenuItem?.submenu = submenu
+        } else {
+            todayTotalMenuItem?.submenu = nil
+        }
+
+        // Rebuild menu to update preset checkmarks
+        rebuildMenu()
     }
 
     private func formatTime(_ interval: TimeInterval) -> String {
@@ -84,11 +108,19 @@ final class StatusBarController {
     private func rebuildMenu() {
         let menu = NSMenu()
 
-        // Work tracker section
+        // Work tracker toggle
         let workItem = NSMenuItem(title: "▶ 作業を開始", action: #selector(toggleWork), keyEquivalent: "w")
         workToggleMenuItem = workItem
         menu.addItem(workItem)
 
+        menu.addItem(NSMenuItem.separator())
+
+        // Preset selection
+        buildPresetSection(in: menu)
+
+        menu.addItem(NSMenuItem.separator())
+
+        // Today's total with breakdown
         let totalItem = NSMenuItem(title: "今日の合計: 0:00:00", action: nil, keyEquivalent: "")
         totalItem.isEnabled = false
         todayTotalMenuItem = totalItem
@@ -116,6 +148,49 @@ final class StatusBarController {
         }
 
         statusItem?.menu = menu
+    }
+
+    private func buildPresetSection(in menu: NSMenu) {
+        let presets = presetsProvider?() ?? []
+        let current = currentPresetProvider?()
+
+        for preset in presets {
+            let item = NSMenuItem(title: preset, action: #selector(selectPreset(_:)), keyEquivalent: "")
+            item.representedObject = preset
+            if preset == current {
+                item.state = .on
+            }
+            menu.addItem(item)
+        }
+
+        let addItem = NSMenuItem(title: "＋ プリセットを追加...", action: #selector(addPreset), keyEquivalent: "")
+        menu.addItem(addItem)
+    }
+
+    @objc private func selectPreset(_ sender: NSMenuItem) {
+        guard let name = sender.representedObject as? String else { return }
+        onSelectPreset?(name)
+    }
+
+    @objc private func addPreset() {
+        let alert = NSAlert()
+        alert.messageText = "プリセットを追加"
+        alert.informativeText = "プロジェクト名を入力してください"
+        alert.addButton(withTitle: "追加")
+        alert.addButton(withTitle: "キャンセル")
+        let textField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+        textField.placeholderString = "プロジェクト名"
+        alert.accessoryView = textField
+        alert.window.initialFirstResponder = textField
+
+        NSApp.activate(ignoringOtherApps: true)
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            let name = textField.stringValue.trimmingCharacters(in: .whitespaces)
+            if !name.isEmpty {
+                onAddPreset?(name)
+            }
+        }
     }
 
     @objc private func toggleWork() { onToggleWork?() }
