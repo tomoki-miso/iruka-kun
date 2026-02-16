@@ -43,6 +43,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarController.onOpenSettings = { [weak self] in
             self?.settingsWindowController.show()
         }
+        statusBarController.presetsProvider = { [weak self] in
+            self?.workHistoryStore.presets ?? []
+        }
+        statusBarController.currentPresetProvider = { [weak self] in
+            self?.workTracker?.currentPreset
+        }
+        statusBarController.todayBreakdownProvider = { [weak self] in
+            self?.workHistoryStore.todayBreakdown() ?? [:]
+        }
+        statusBarController.onSelectPreset = { [weak self] name in
+            self?.workTracker?.switchPreset(to: name)
+        }
+        statusBarController.onAddPreset = { [weak self] name in
+            self?.workHistoryStore.addPreset(name)
+            self?.workTracker?.switchPreset(to: name)
+            self?.statusBarController.updateWorkMenu()
+        }
         statusBarController.onQuit = {
             NSApp.terminate(nil)
         }
@@ -59,7 +76,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             self?.statusBarController.updateTimerDisplay(elapsed: elapsed)
             self?.characterController?.updateWorkTimer(
                 elapsed: elapsed,
-                state: self?.workTracker?.state ?? .idle
+                state: self?.workTracker?.state ?? .idle,
+                preset: self?.workTracker?.currentPreset
             )
         }
         workTracker?.onStateChanged = { [weak self] _ in
@@ -68,7 +86,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             self?.statusBarController.updateTimerDisplay(elapsed: elapsed)
             self?.characterController?.updateWorkTimer(
                 elapsed: elapsed,
-                state: self?.workTracker?.state ?? .idle
+                state: self?.workTracker?.state ?? .idle,
+                preset: self?.workTracker?.currentPreset
             )
         }
     }

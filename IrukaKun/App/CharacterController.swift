@@ -10,12 +10,14 @@ final class CharacterController {
     private let soundPlayer = SoundPlayer()
     private let workTimerOverlay = WorkTimerOverlay()
     private let cpuMonitor = CPUMonitor()
+    private let meigenFetcher = MeigenFetcher()
 
     private var dialogueTimer: Timer?
     private var idleTimer: Timer?
     private var stateRevertTimer: Timer?
     private var floatTimer: Timer?
     private var cpuTimer: Timer?
+    private var nextBubbleTimer: Timer?
     private var lastTimeOfDay: TimeOfDay?
     private var lastCPULevel: CPUMonitor.Level = .low
     private var floatPhase: Double = 0
@@ -25,7 +27,7 @@ final class CharacterController {
     // Intervals
     private let dialogueInterval: TimeInterval = 900 // 15 minutes
     private let idleTimeout: TimeInterval = 1800     // 30 minutes
-    private let temporaryStateDuration: TimeInterval = 3.0
+    private let temporaryStateDuration: TimeInterval = 1.5
 
     // Floating
     private let floatAmplitude: CGFloat = 4.0
@@ -44,15 +46,17 @@ final class CharacterController {
         startFloating()
     }
 
-    func updateWorkTimer(elapsed: TimeInterval, state: WorkTracker.State) {
-        workTimerOverlay.update(elapsed: elapsed, state: state)
+    func updateWorkTimer(elapsed: TimeInterval, state: WorkTracker.State, preset: String? = nil) {
+        workTimerOverlay.update(elapsed: elapsed, state: state, preset: preset)
     }
 
     func showCharacter() {
         characterWindow.orderFront(nil)
+        showGreeting()
     }
 
     func hideCharacter() {
+        nextBubbleTimer?.invalidate()
         characterWindow.orderOut(nil)
     }
 
@@ -87,6 +91,11 @@ final class CharacterController {
             self?.resumeFloating(from: position)
             self?.characterWindow.savePosition()
             self?.resetIdleTimer()
+        }
+
+        // Bubble cycling
+        bubbleView.onFadeComplete = { [weak self] in
+            self?.scheduleNextBubble()
         }
     }
 
@@ -228,7 +237,46 @@ final class CharacterController {
     }
 
     private func showBubble(text: String) {
+        nextBubbleTimer?.invalidate()
         let charFrame = NSRect(origin: .zero, size: CharacterWindow.characterSize)
         bubbleView.show(text: text, relativeTo: charFrame, in: characterWindow)
+    }
+
+    // MARK: - Bubble Cycling
+
+    private func showGreeting() {
+        if let greeting = dialogueManager.randomGreeting() {
+            showBubble(text: greeting)
+        }
+    }
+
+    private func scheduleNextBubble() {
+        nextBubbleTimer?.invalidate()
+        nextBubbleTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+            Task { @MainActor in
+                self?.showNextBubble()
+            }
+        }
+    }
+
+    private func showNextBubble() {
+        if Int.random(in: 0..<5) == 0 {
+            Task {
+                if let meigen = await meigenFetcher.fetch() {
+                    showBubble(text: meigen)
+                } else {
+                    showIdleBubble()
+                }
+            }
+        } else {
+            showIdleBubble()
+        }
+    }
+
+    private func showIdleBubble() {
+        let hour = Calendar.current.component(.hour, from: Date())
+        if let text = dialogueManager.randomIdleDialogue(hour: hour) {
+            showBubble(text: text)
+        }
     }
 }
