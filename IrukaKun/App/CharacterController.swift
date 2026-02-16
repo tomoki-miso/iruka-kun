@@ -7,6 +7,7 @@ final class CharacterController {
     private let characterWindow = CharacterWindow()
     private let characterView: CharacterView
     private let bubbleView = BubbleView()
+    private let soundPlayer = SoundPlayer()
 
     private var dialogueTimer: Timer?
     private var idleTimer: Timer?
@@ -94,6 +95,7 @@ final class CharacterController {
     // MARK: - Event Handling
 
     private func handleClick() {
+        soundPlayer.playClick()
         stateMachine.handleEvent(.clicked)
         showDialogueForEvent(.clicked)
         scheduleStateRevert()
