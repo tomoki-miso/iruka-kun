@@ -20,8 +20,8 @@ targets:
       - path: IrukaKun
         excludes:
           - "**/*.entitlements"
-    resources:
       - path: Resources
+        buildPhase: resources
     settings:
       base:
         INFOPLIST_FILE: IrukaKun/Info.plist
