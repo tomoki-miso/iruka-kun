@@ -45,6 +45,30 @@ final class WorkHistoryStore: Sendable {
         return loadHistory()[dateKey] ?? [:]
     }
 
+    // MARK: - History
+
+    struct DayHistory {
+        let date: Date
+        let dateString: String
+        let presets: [String: TimeInterval]
+        var total: TimeInterval { presets.values.reduce(0, +) }
+    }
+
+    func recentHistory(days: Int = 7) -> [DayHistory] {
+        let history = loadHistory()
+        let calendar = Calendar.current
+        let today = Date()
+        var results: [DayHistory] = []
+
+        for offset in 0..<days {
+            guard let date = calendar.date(byAdding: .day, value: -offset, to: today) else { continue }
+            let dateKey = dateFormatter.string(from: date)
+            guard let dayData = history[dateKey], !dayData.isEmpty else { continue }
+            results.append(DayHistory(date: date, dateString: dateKey, presets: dayData))
+        }
+        return results
+    }
+
     // MARK: - Presets
 
     var presets: [String] {

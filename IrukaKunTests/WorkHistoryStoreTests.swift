@@ -71,4 +71,26 @@ final class WorkHistoryStoreTests: XCTestCase {
         store.addPreset("A")
         XCTAssertEqual(store.presets, ["A"])
     }
+
+    func testRecentHistoryReturnsData() {
+        let calendar = Calendar.current
+        let today = Date()
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
+        store.addDuration(3600, for: today, preset: "A")
+        store.addDuration(1800, for: today, preset: "B")
+        store.addDuration(7200, for: yesterday, preset: "A")
+        let history = store.recentHistory(days: 7)
+        XCTAssertEqual(history.count, 2)
+        XCTAssertEqual(history[0].presets["A"] ?? 0, 3600, accuracy: 0.1)
+        XCTAssertEqual(history[0].presets["B"] ?? 0, 1800, accuracy: 0.1)
+        XCTAssertEqual(history[0].total, 5400, accuracy: 0.1)
+        XCTAssertEqual(history[1].presets["A"] ?? 0, 7200, accuracy: 0.1)
+        XCTAssertEqual(history[1].total, 7200, accuracy: 0.1)
+    }
+
+    func testRecentHistorySkipsEmptyDays() {
+        store.addDuration(100, for: Date(), preset: nil)
+        let history = store.recentHistory(days: 7)
+        XCTAssertEqual(history.count, 1)
+    }
 }
