@@ -4,6 +4,7 @@ import AppKit
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private let statusBarController = StatusBarController()
     private var characterWindow: CharacterWindow?
+    private var characterView: CharacterView?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupCharacterWindow()
@@ -13,6 +14,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func setupCharacterWindow() {
         characterWindow = CharacterWindow()
+        let view = CharacterView(frame: NSRect(origin: .zero, size: CharacterWindow.characterSize))
+        characterView = view
+        characterWindow?.contentView = view
         characterWindow?.orderFront(nil)
     }
 
