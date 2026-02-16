@@ -3,10 +3,12 @@ import AppKit
 @MainActor
 final class CharacterView: NSView {
     private let imageLayer = CALayer()
+    let animator = SpriteAnimator()
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupLayer()
+        setupAnimator()
     }
 
     required init?(coder: NSCoder) {
@@ -25,6 +27,13 @@ final class CharacterView: NSView {
         if let image = NSImage(named: "iruka_idle_0") {
             imageLayer.contents = image
         }
+    }
+
+    private func setupAnimator() {
+        animator.onFrameChanged = { [weak self] image in
+            self?.imageLayer.contents = image
+        }
+        animator.play(state: .idle)
     }
 
     override func layout() {
