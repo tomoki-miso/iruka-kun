@@ -1,0 +1,590 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D5F1A83C7E924B6D08C3F2A1 /* WorkHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E3B91D4F6C28A503D1E4F6 /* WorkHistoryView.swift */; };
+		10C67E41B5FAC2B24F2BAEE2 /* WorkHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A5EA4C0F1F671D6E5837A8 /* WorkHistoryStore.swift */; };
+		252EBF1FD0CDECB9D184F86F /* WorkTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCACEF3CAAB55150BCB5B2B /* WorkTracker.swift */; };
+		2C46C5E7A204819D4541650D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0988347F8D32103C493941 /* AppDelegate.swift */; };
+		4037CEA7E9A7CE3A8C6AAB1F /* PositionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971EEBE20FB8A2A2E42A5556 /* PositionStoreTests.swift */; };
+		4724AF59053BDA9345083F12 /* IrukaKunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DDC50FC7524C15CBB70D6B /* IrukaKunTests.swift */; };
+		4945AC894695FA38B82D85AD /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C595BA1A3EC9D90019498507 /* SettingsWindowController.swift */; };
+		4C0F2F93BEE082FE5C4BA325 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192512925EAE39848A5D565 /* BubbleView.swift */; };
+		4E41660CCBBE84518CA3A0FC /* ScreenUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135268895097DF67B90C4998 /* ScreenUtility.swift */; };
+		504426B00013376E2B1A108C /* PositionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C27A7D980FA4FE1777F82F7 /* PositionStore.swift */; };
+		528722FD1BED7E816DCA91F7 /* CharacterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037A549C9EC3C3BEDD61E0AA /* CharacterState.swift */; };
+		625DFC31E779E9341A906971 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1D2071564CB99F5362AE80 /* SoundPlayer.swift */; };
+		64D8916F761408CDD123EB3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD51F7CBD6344C6BDCD768D6 /* Assets.xcassets */; };
+		7328DFA70FD5C6AC229CA2E2 /* WorkTimerOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C561C962AA2F39E5309AAC48 /* WorkTimerOverlay.swift */; };
+		78B482846A31DA699329E707 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1346570F1A5E89C9F2296A /* StatusBarController.swift */; };
+		7BDE90435C4A698862D78294 /* SpriteAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A441095A1AF6C871A3BA6F65 /* SpriteAnimator.swift */; };
+		8D2C7AB9CB2BB85296A10DAE /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3566C17FA493A4681918F5C7 /* StateMachine.swift */; };
+		8F09905192AB0678718552A1 /* WorkHistoryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC849DD357FF0467CBC56B1 /* WorkHistoryWindowController.swift */; };
+		94B7A9B3ACC709A52C3CF1BC /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E573B33DC52590F0C535395A /* CharacterView.swift */; };
+		A673B53A79FCD4407B1731CD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180040DBF6B50DDE00CE10A5 /* main.swift */; };
+		A74CD70C2E8B793606047B57 /* CharacterWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2063FCD01D68549A4D6F0BFF /* CharacterWindow.swift */; };
+		B40C6C36ED1D12E06654814F /* WorkHistoryStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D0D9D4AE2EBFAA2B20400 /* WorkHistoryStoreTests.swift */; };
+		B51AF5271CA943F840311037 /* MeigenFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BC447B301FA1345CA3A0D5 /* MeigenFetcher.swift */; };
+		B67AAD77F857D10ACD250EB0 /* CharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F10C78643B6C6D37E28592 /* CharacterController.swift */; };
+		B9B790A29644CD10136E0A79 /* DialogueManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681D9C8436B936B7707E7E6A /* DialogueManagerTests.swift */; };
+		BA49763B25B5ABB151CFDBAC /* WorkTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E0806E96FCBF1953927B68 /* WorkTrackerTests.swift */; };
+		BC2901D7CC29293DD5CFA628 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14D62A0785D70E6D52AA533 /* SettingsView.swift */; };
+		BCF72AF74F441239F7604A7D /* StateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8575AE916E0FD0435395F8 /* StateMachineTests.swift */; };
+		C49F9DEB671B810A09CC6A27 /* Dialogues.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A663F7C23BC562FD0778DAE /* Dialogues.json */; };
+		C8FDC070ACAEB4638F1EB4B9 /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738E61381E45DEA0F7402BD /* TimeOfDay.swift */; };
+		D31E02632534DB809FA3740D /* iruka_idle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = B6183D7C6F25B2C52C138F7B /* iruka_idle_0.png */; };
+		E15C43C0CA1B115E292315CC /* CPUMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C3ADAD1FD312D2827E58E0 /* CPUMonitor.swift */; };
+		EA29BA8640DC7870A2803340 /* DialogueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F9D10226EA432B42C3F37 /* DialogueManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		821490CE4C448995FAEF847C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 285C3A1B4BC8EBA495687865 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 888D09EA3FC0D22DC1CE8FF6;
+			remoteInfo = IrukaKun;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0192512925EAE39848A5D565 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
+		037A549C9EC3C3BEDD61E0AA /* CharacterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterState.swift; sourceTree = "<group>"; };
+		06E0806E96FCBF1953927B68 /* WorkTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTrackerTests.swift; sourceTree = "<group>"; };
+		07C3ADAD1FD312D2827E58E0 /* CPUMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUMonitor.swift; sourceTree = "<group>"; };
+		093D0D9D4AE2EBFAA2B20400 /* WorkHistoryStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHistoryStoreTests.swift; sourceTree = "<group>"; };
+		093E98479E61236346B08283 /* IrukaKunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IrukaKunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FCACEF3CAAB55150BCB5B2B /* WorkTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTracker.swift; sourceTree = "<group>"; };
+		135268895097DF67B90C4998 /* ScreenUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenUtility.swift; sourceTree = "<group>"; };
+		180040DBF6B50DDE00CE10A5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		19A5EA4C0F1F671D6E5837A8 /* WorkHistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHistoryStore.swift; sourceTree = "<group>"; };
+		A7E3B91D4F6C28A503D1E4F6 /* WorkHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHistoryView.swift; sourceTree = "<group>"; };
+		2063FCD01D68549A4D6F0BFF /* CharacterWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterWindow.swift; sourceTree = "<group>"; };
+		2A1D2071564CB99F5362AE80 /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
+		3566C17FA493A4681918F5C7 /* StateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
+		3738E61381E45DEA0F7402BD /* TimeOfDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOfDay.swift; sourceTree = "<group>"; };
+		3AC849DD357FF0467CBC56B1 /* WorkHistoryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHistoryWindowController.swift; sourceTree = "<group>"; };
+		3B1346570F1A5E89C9F2296A /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
+		411EA5113605FF7A3B410190 /* IrukaKun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IrukaKun.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C27A7D980FA4FE1777F82F7 /* PositionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionStore.swift; sourceTree = "<group>"; };
+		4C8575AE916E0FD0435395F8 /* StateMachineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachineTests.swift; sourceTree = "<group>"; };
+		5B8F9D10226EA432B42C3F37 /* DialogueManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogueManager.swift; sourceTree = "<group>"; };
+		681D9C8436B936B7707E7E6A /* DialogueManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogueManagerTests.swift; sourceTree = "<group>"; };
+		6A663F7C23BC562FD0778DAE /* Dialogues.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Dialogues.json; sourceTree = "<group>"; };
+		76DDC50FC7524C15CBB70D6B /* IrukaKunTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IrukaKunTests.swift; sourceTree = "<group>"; };
+		971EEBE20FB8A2A2E42A5556 /* PositionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionStoreTests.swift; sourceTree = "<group>"; };
+		9C0988347F8D32103C493941 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A441095A1AF6C871A3BA6F65 /* SpriteAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteAnimator.swift; sourceTree = "<group>"; };
+		B6183D7C6F25B2C52C138F7B /* iruka_idle_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iruka_idle_0.png; sourceTree = "<group>"; };
+		C561C962AA2F39E5309AAC48 /* WorkTimerOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTimerOverlay.swift; sourceTree = "<group>"; };
+		C595BA1A3EC9D90019498507 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
+		D2BC447B301FA1345CA3A0D5 /* MeigenFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeigenFetcher.swift; sourceTree = "<group>"; };
+		D2F10C78643B6C6D37E28592 /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
+		DAEC36907ABD0F40CEDA6803 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E573B33DC52590F0C535395A /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
+		F14D62A0785D70E6D52AA533 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FD51F7CBD6344C6BDCD768D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		030606DD82A1E69F5AF8674F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F14D62A0785D70E6D52AA533 /* SettingsView.swift */,
+				C595BA1A3EC9D90019498507 /* SettingsWindowController.swift */,
+				A7E3B91D4F6C28A503D1E4F6 /* WorkHistoryView.swift */,
+				3AC849DD357FF0467CBC56B1 /* WorkHistoryWindowController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		0CE27D55349DDCE7DDB61B70 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				9C0988347F8D32103C493941 /* AppDelegate.swift */,
+				D2F10C78643B6C6D37E28592 /* CharacterController.swift */,
+				180040DBF6B50DDE00CE10A5 /* main.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		18CBADE77EE07DC38909DF8F /* State */ = {
+			isa = PBXGroup;
+			children = (
+				037A549C9EC3C3BEDD61E0AA /* CharacterState.swift */,
+				5B8F9D10226EA432B42C3F37 /* DialogueManager.swift */,
+				3566C17FA493A4681918F5C7 /* StateMachine.swift */,
+				3738E61381E45DEA0F7402BD /* TimeOfDay.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		31A79613D0D3808CE6D2F4AE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				411EA5113605FF7A3B410190 /* IrukaKun.app */,
+				093E98479E61236346B08283 /* IrukaKunTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43BCD3DEDCC514613EB08CA9 /* IrukaKun */ = {
+			isa = PBXGroup;
+			children = (
+				DAEC36907ABD0F40CEDA6803 /* Info.plist */,
+				0CE27D55349DDCE7DDB61B70 /* App */,
+				5DDB0BF11167D055DF4B8F0C /* Character */,
+				82C4F87613E632D248467744 /* MenuBar */,
+				030606DD82A1E69F5AF8674F /* Settings */,
+				18CBADE77EE07DC38909DF8F /* State */,
+				6A17B054F1F4F42067AA9328 /* Utilities */,
+				7753E79BA1DF0012259B24DA /* WorkTracker */,
+			);
+			path = IrukaKun;
+			sourceTree = "<group>";
+		};
+		5DDB0BF11167D055DF4B8F0C /* Character */ = {
+			isa = PBXGroup;
+			children = (
+				0192512925EAE39848A5D565 /* BubbleView.swift */,
+				E573B33DC52590F0C535395A /* CharacterView.swift */,
+				2063FCD01D68549A4D6F0BFF /* CharacterWindow.swift */,
+				A441095A1AF6C871A3BA6F65 /* SpriteAnimator.swift */,
+				C561C962AA2F39E5309AAC48 /* WorkTimerOverlay.swift */,
+			);
+			path = Character;
+			sourceTree = "<group>";
+		};
+		6A17B054F1F4F42067AA9328 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				07C3ADAD1FD312D2827E58E0 /* CPUMonitor.swift */,
+				D2BC447B301FA1345CA3A0D5 /* MeigenFetcher.swift */,
+				4C27A7D980FA4FE1777F82F7 /* PositionStore.swift */,
+				135268895097DF67B90C4998 /* ScreenUtility.swift */,
+				2A1D2071564CB99F5362AE80 /* SoundPlayer.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		7753E79BA1DF0012259B24DA /* WorkTracker */ = {
+			isa = PBXGroup;
+			children = (
+				19A5EA4C0F1F671D6E5837A8 /* WorkHistoryStore.swift */,
+				0FCACEF3CAAB55150BCB5B2B /* WorkTracker.swift */,
+			);
+			path = WorkTracker;
+			sourceTree = "<group>";
+		};
+		81EE7F87EB2A8B8DF43A4223 /* Sprites */ = {
+			isa = PBXGroup;
+			children = (
+				B6183D7C6F25B2C52C138F7B /* iruka_idle_0.png */,
+			);
+			path = Sprites;
+			sourceTree = "<group>";
+		};
+		82C4F87613E632D248467744 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				3B1346570F1A5E89C9F2296A /* StatusBarController.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		8C050C826FBD720E841163BE /* IrukaKunTests */ = {
+			isa = PBXGroup;
+			children = (
+				681D9C8436B936B7707E7E6A /* DialogueManagerTests.swift */,
+				76DDC50FC7524C15CBB70D6B /* IrukaKunTests.swift */,
+				971EEBE20FB8A2A2E42A5556 /* PositionStoreTests.swift */,
+				4C8575AE916E0FD0435395F8 /* StateMachineTests.swift */,
+				093D0D9D4AE2EBFAA2B20400 /* WorkHistoryStoreTests.swift */,
+				06E0806E96FCBF1953927B68 /* WorkTrackerTests.swift */,
+			);
+			path = IrukaKunTests;
+			sourceTree = "<group>";
+		};
+		A82CD50269FC66443DDFD2A5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FD51F7CBD6344C6BDCD768D6 /* Assets.xcassets */,
+				6A663F7C23BC562FD0778DAE /* Dialogues.json */,
+				81EE7F87EB2A8B8DF43A4223 /* Sprites */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BE4ECE8F5C7471BBF0114970 = {
+			isa = PBXGroup;
+			children = (
+				43BCD3DEDCC514613EB08CA9 /* IrukaKun */,
+				8C050C826FBD720E841163BE /* IrukaKunTests */,
+				A82CD50269FC66443DDFD2A5 /* Resources */,
+				31A79613D0D3808CE6D2F4AE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		888D09EA3FC0D22DC1CE8FF6 /* IrukaKun */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17C01040425AA659FDDF57AC /* Build configuration list for PBXNativeTarget "IrukaKun" */;
+			buildPhases = (
+				391451E35B4B811DEFAC3B1C /* Sources */,
+				43D8077A889B444EDDDC15F0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IrukaKun;
+			packageProductDependencies = (
+			);
+			productName = IrukaKun;
+			productReference = 411EA5113605FF7A3B410190 /* IrukaKun.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B53FCBC429C4AEEF001040D5 /* IrukaKunTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2371481C4292CD06C4CD13C /* Build configuration list for PBXNativeTarget "IrukaKunTests" */;
+			buildPhases = (
+				9F2D8DF5288387D5D9BB524E /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B00DCD4D58EA607E68564A1D /* PBXTargetDependency */,
+			);
+			name = IrukaKunTests;
+			packageProductDependencies = (
+			);
+			productName = IrukaKunTests;
+			productReference = 093E98479E61236346B08283 /* IrukaKunTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		285C3A1B4BC8EBA495687865 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 91A82A6580B688BF9B2475A0 /* Build configuration list for PBXProject "IrukaKun" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = BE4ECE8F5C7471BBF0114970;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				888D09EA3FC0D22DC1CE8FF6 /* IrukaKun */,
+				B53FCBC429C4AEEF001040D5 /* IrukaKunTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		43D8077A889B444EDDDC15F0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64D8916F761408CDD123EB3C /* Assets.xcassets in Resources */,
+				C49F9DEB671B810A09CC6A27 /* Dialogues.json in Resources */,
+				D31E02632534DB809FA3740D /* iruka_idle_0.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		391451E35B4B811DEFAC3B1C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C46C5E7A204819D4541650D /* AppDelegate.swift in Sources */,
+				4C0F2F93BEE082FE5C4BA325 /* BubbleView.swift in Sources */,
+				E15C43C0CA1B115E292315CC /* CPUMonitor.swift in Sources */,
+				B67AAD77F857D10ACD250EB0 /* CharacterController.swift in Sources */,
+				528722FD1BED7E816DCA91F7 /* CharacterState.swift in Sources */,
+				94B7A9B3ACC709A52C3CF1BC /* CharacterView.swift in Sources */,
+				A74CD70C2E8B793606047B57 /* CharacterWindow.swift in Sources */,
+				EA29BA8640DC7870A2803340 /* DialogueManager.swift in Sources */,
+				B51AF5271CA943F840311037 /* MeigenFetcher.swift in Sources */,
+				504426B00013376E2B1A108C /* PositionStore.swift in Sources */,
+				4E41660CCBBE84518CA3A0FC /* ScreenUtility.swift in Sources */,
+				BC2901D7CC29293DD5CFA628 /* SettingsView.swift in Sources */,
+				4945AC894695FA38B82D85AD /* SettingsWindowController.swift in Sources */,
+				625DFC31E779E9341A906971 /* SoundPlayer.swift in Sources */,
+				7BDE90435C4A698862D78294 /* SpriteAnimator.swift in Sources */,
+				8D2C7AB9CB2BB85296A10DAE /* StateMachine.swift in Sources */,
+				78B482846A31DA699329E707 /* StatusBarController.swift in Sources */,
+				C8FDC070ACAEB4638F1EB4B9 /* TimeOfDay.swift in Sources */,
+				10C67E41B5FAC2B24F2BAEE2 /* WorkHistoryStore.swift in Sources */,
+				D5F1A83C7E924B6D08C3F2A1 /* WorkHistoryView.swift in Sources */,
+				8F09905192AB0678718552A1 /* WorkHistoryWindowController.swift in Sources */,
+				7328DFA70FD5C6AC229CA2E2 /* WorkTimerOverlay.swift in Sources */,
+				252EBF1FD0CDECB9D184F86F /* WorkTracker.swift in Sources */,
+				A673B53A79FCD4407B1731CD /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F2D8DF5288387D5D9BB524E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9B790A29644CD10136E0A79 /* DialogueManagerTests.swift in Sources */,
+				4724AF59053BDA9345083F12 /* IrukaKunTests.swift in Sources */,
+				4037CEA7E9A7CE3A8C6AAB1F /* PositionStoreTests.swift in Sources */,
+				BCF72AF74F441239F7604A7D /* StateMachineTests.swift in Sources */,
+				B40C6C36ED1D12E06654814F /* WorkHistoryStoreTests.swift in Sources */,
+				BA49763B25B5ABB151CFDBAC /* WorkTrackerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B00DCD4D58EA607E68564A1D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 888D09EA3FC0D22DC1CE8FF6 /* IrukaKun */;
+			targetProxy = 821490CE4C448995FAEF847C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		54523A9437D74B5DBE2482FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "IrukaKun/iruka-kun.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = IrukaKun/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.iruka-kun.IrukaKun";
+				PRODUCT_MODULE_NAME = IrukaKun;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		75EEBD187910797DFC9D8FF1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "iruka-kun";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6;
+			};
+			name = Release;
+		};
+		8C8CF11A1D7970310ECC3423 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "IrukaKun/iruka-kun.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = IrukaKun/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.iruka-kun.IrukaKun";
+				PRODUCT_MODULE_NAME = IrukaKun;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A431EFB199DE21236E2F9255 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "iruka-kun";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6;
+			};
+			name = Debug;
+		};
+		CAD7B4127D57F4AA35CBAA33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.iruka-kun.IrukaKunTests";
+				PRODUCT_NAME = IrukaKunTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iruka-kun.app/Contents/MacOS/iruka-kun";
+			};
+			name = Debug;
+		};
+		E37ECCFFF5DE29838648800B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.iruka-kun.IrukaKunTests";
+				PRODUCT_NAME = IrukaKunTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iruka-kun.app/Contents/MacOS/iruka-kun";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		17C01040425AA659FDDF57AC /* Build configuration list for PBXNativeTarget "IrukaKun" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				54523A9437D74B5DBE2482FC /* Debug */,
+				8C8CF11A1D7970310ECC3423 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		91A82A6580B688BF9B2475A0 /* Build configuration list for PBXProject "IrukaKun" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A431EFB199DE21236E2F9255 /* Debug */,
+				75EEBD187910797DFC9D8FF1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D2371481C4292CD06C4CD13C /* Build configuration list for PBXNativeTarget "IrukaKunTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CAD7B4127D57F4AA35CBAA33 /* Debug */,
+				E37ECCFFF5DE29838648800B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 285C3A1B4BC8EBA495687865 /* Project object */;
+}
