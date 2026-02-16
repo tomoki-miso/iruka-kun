@@ -4,6 +4,7 @@ import AppKit
 final class CharacterWindow: NSWindow {
     static let characterSize = CGSize(width: 128, height: 128)
     private let positionStore = PositionStore()
+    private let screenUtility = ScreenUtility()
 
     init() {
         let initialFrame = NSRect(origin: .zero, size: Self.characterSize)
@@ -23,6 +24,10 @@ final class CharacterWindow: NSWindow {
         ignoresMouseEvents = false
 
         restorePosition()
+
+        screenUtility.onScreenConfigurationChanged = { [weak self] in
+            self?.ensureOnScreen()
+        }
     }
 
     override var canBecomeKey: Bool { true }
@@ -36,6 +41,19 @@ final class CharacterWindow: NSWindow {
             setFrameOrigin(saved)
         } else {
             setFrameOrigin(Self.defaultOrigin())
+        }
+    }
+
+    func ensureOnScreen() {
+        let origin = frame.origin
+        if !ScreenUtility.isPointOnAnyScreen(origin) {
+            let safeFrame = ScreenUtility.nearestScreenFrame(to: origin)
+            let safeOrigin = CGPoint(
+                x: min(origin.x, safeFrame.maxX - frame.width),
+                y: min(origin.y, safeFrame.maxY - frame.height)
+            )
+            setFrameOrigin(safeOrigin)
+            savePosition()
         }
     }
 
