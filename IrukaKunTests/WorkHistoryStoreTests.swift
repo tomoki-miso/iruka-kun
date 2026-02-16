@@ -13,47 +13,62 @@ final class WorkHistoryStoreTests: XCTestCase {
 
     func testAddAndRetrieveDuration() {
         let today = Date()
-        store.addDuration(3600, for: today)
-        XCTAssertEqual(store.totalDuration(for: today), 3600, accuracy: 0.1)
+        store.addDuration(3600, for: today, preset: "ProjectA")
+        XCTAssertEqual(store.totalDuration(for: today, preset: "ProjectA"), 3600, accuracy: 0.1)
     }
 
     func testAddDurationAccumulates() {
         let today = Date()
-        store.addDuration(1800, for: today)
-        store.addDuration(1200, for: today)
-        XCTAssertEqual(store.totalDuration(for: today), 3000, accuracy: 0.1)
+        store.addDuration(1800, for: today, preset: "ProjectA")
+        store.addDuration(1200, for: today, preset: "ProjectA")
+        XCTAssertEqual(store.totalDuration(for: today, preset: "ProjectA"), 3000, accuracy: 0.1)
     }
 
-    func testTodayTotal() {
-        store.addDuration(7200, for: Date())
-        XCTAssertEqual(store.todayTotal(), 7200, accuracy: 0.1)
+    func testTodayTotalAcrossPresets() {
+        store.addDuration(3600, for: Date(), preset: "A")
+        store.addDuration(1800, for: Date(), preset: "B")
+        XCTAssertEqual(store.todayTotal(), 5400, accuracy: 0.1)
     }
 
     func testTodayTotalReturnsZeroWhenNoData() {
         XCTAssertEqual(store.todayTotal(), 0, accuracy: 0.1)
     }
 
-    func testRecentHistory() {
-        let calendar = Calendar.current
+    func testDifferentPresetsAreSeparate() {
         let today = Date()
-        let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
-
-        store.addDuration(3600, for: today)
-        store.addDuration(7200, for: yesterday)
-
-        let history = store.recentHistory(days: 7)
-        XCTAssertEqual(history.count, 2)
+        store.addDuration(100, for: today, preset: "A")
+        store.addDuration(200, for: today, preset: "B")
+        XCTAssertEqual(store.totalDuration(for: today, preset: "A"), 100, accuracy: 0.1)
+        XCTAssertEqual(store.totalDuration(for: today, preset: "B"), 200, accuracy: 0.1)
     }
 
-    func testDifferentDaysAreSeparate() {
-        let calendar = Calendar.current
+    func testTodayBreakdown() {
+        store.addDuration(3600, for: Date(), preset: "A")
+        store.addDuration(1800, for: Date(), preset: "B")
+        let breakdown = store.todayBreakdown()
+        XCTAssertEqual(breakdown["A"] ?? 0, 3600, accuracy: 0.1)
+        XCTAssertEqual(breakdown["B"] ?? 0, 1800, accuracy: 0.1)
+    }
+
+    func testNilPresetUsesDefaultKey() {
         let today = Date()
-        let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
+        store.addDuration(500, for: today, preset: nil)
+        XCTAssertEqual(store.totalDuration(for: today, preset: nil), 500, accuracy: 0.1)
+        XCTAssertEqual(store.todayTotal(), 500, accuracy: 0.1)
+    }
 
-        store.addDuration(100, for: today)
-        store.addDuration(200, for: yesterday)
+    func testPresetsCRUD() {
+        XCTAssertEqual(store.presets, [])
+        store.addPreset("ProjectA")
+        store.addPreset("ProjectB")
+        XCTAssertEqual(store.presets, ["ProjectA", "ProjectB"])
+        store.removePreset("ProjectA")
+        XCTAssertEqual(store.presets, ["ProjectB"])
+    }
 
-        XCTAssertEqual(store.totalDuration(for: today), 100, accuracy: 0.1)
-        XCTAssertEqual(store.totalDuration(for: yesterday), 200, accuracy: 0.1)
+    func testAddDuplicatePresetIsIgnored() {
+        store.addPreset("A")
+        store.addPreset("A")
+        XCTAssertEqual(store.presets, ["A"])
     }
 }

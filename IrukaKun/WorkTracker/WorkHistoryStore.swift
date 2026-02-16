@@ -2,7 +2,9 @@ import Foundation
 
 final class WorkHistoryStore: Sendable {
     private nonisolated(unsafe) let defaults: UserDefaults
-    private static let storageKey = "iruka_work_history"
+    private static let historyKey = "iruka_work_history_v2"
+    private static let presetsKey = "iruka_presets"
+    private static let noPresetKey = "__none__"
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -14,36 +16,64 @@ final class WorkHistoryStore: Sendable {
         return f
     }
 
-    func addDuration(_ duration: TimeInterval, for date: Date) {
+    // MARK: - Duration
+
+    func addDuration(_ duration: TimeInterval, for date: Date, preset: String? = nil) {
         var history = loadHistory()
-        let key = dateFormatter.string(from: date)
-        history[key, default: 0] += duration
-        defaults.set(history, forKey: Self.storageKey)
+        let dateKey = dateFormatter.string(from: date)
+        let presetKey = preset ?? Self.noPresetKey
+        var dayData = history[dateKey] ?? [:]
+        dayData[presetKey, default: 0] += duration
+        history[dateKey] = dayData
+        defaults.set(history, forKey: Self.historyKey)
     }
 
-    func totalDuration(for date: Date) -> TimeInterval {
-        let key = dateFormatter.string(from: date)
-        return loadHistory()[key] ?? 0
+    func totalDuration(for date: Date, preset: String? = nil) -> TimeInterval {
+        let dateKey = dateFormatter.string(from: date)
+        let presetKey = preset ?? Self.noPresetKey
+        return loadHistory()[dateKey]?[presetKey] ?? 0
     }
 
     func todayTotal() -> TimeInterval {
-        totalDuration(for: Date())
+        let dateKey = dateFormatter.string(from: Date())
+        guard let dayData = loadHistory()[dateKey] else { return 0 }
+        return dayData.values.reduce(0, +)
     }
 
-    func recentHistory(days: Int = 7) -> [(date: String, duration: TimeInterval)] {
-        let history = loadHistory()
-        let calendar = Calendar.current
-        let today = Date()
+    func todayBreakdown() -> [String: TimeInterval] {
+        let dateKey = dateFormatter.string(from: Date())
+        return loadHistory()[dateKey] ?? [:]
+    }
 
-        return (0..<days).compactMap { offset in
-            guard let date = calendar.date(byAdding: .day, value: -offset, to: today) else { return nil }
-            let key = dateFormatter.string(from: date)
-            guard let duration = history[key] else { return nil }
-            return (date: key, duration: duration)
+    // MARK: - Presets
+
+    var presets: [String] {
+        defaults.stringArray(forKey: Self.presetsKey) ?? []
+    }
+
+    func addPreset(_ name: String) {
+        var list = presets
+        guard !list.contains(name) else { return }
+        list.append(name)
+        defaults.set(list, forKey: Self.presetsKey)
+    }
+
+    func removePreset(_ name: String) {
+        var list = presets
+        list.removeAll { $0 == name }
+        defaults.set(list, forKey: Self.presetsKey)
+    }
+
+    // MARK: - Private
+
+    private func loadHistory() -> [String: [String: TimeInterval]] {
+        guard let raw = defaults.dictionary(forKey: Self.historyKey) else { return [:] }
+        var result: [String: [String: TimeInterval]] = [:]
+        for (dateKey, value) in raw {
+            if let dayDict = value as? [String: TimeInterval] {
+                result[dateKey] = dayDict
+            }
         }
-    }
-
-    private func loadHistory() -> [String: TimeInterval] {
-        defaults.dictionary(forKey: Self.storageKey) as? [String: TimeInterval] ?? [:]
+        return result
     }
 }
