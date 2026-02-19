@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D5F1A83C7E924B6D08C3F2A1 /* WorkHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E3B91D4F6C28A503D1E4F6 /* WorkHistoryView.swift */; };
 		10C67E41B5FAC2B24F2BAEE2 /* WorkHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A5EA4C0F1F671D6E5837A8 /* WorkHistoryStore.swift */; };
 		252EBF1FD0CDECB9D184F86F /* WorkTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCACEF3CAAB55150BCB5B2B /* WorkTracker.swift */; };
 		2C46C5E7A204819D4541650D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0988347F8D32103C493941 /* AppDelegate.swift */; };
@@ -38,6 +37,7 @@
 		C49F9DEB671B810A09CC6A27 /* Dialogues.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A663F7C23BC562FD0778DAE /* Dialogues.json */; };
 		C8FDC070ACAEB4638F1EB4B9 /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738E61381E45DEA0F7402BD /* TimeOfDay.swift */; };
 		D31E02632534DB809FA3740D /* iruka_idle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = B6183D7C6F25B2C52C138F7B /* iruka_idle_0.png */; };
+		DCD6939E8EA403538EAF7EB7 /* WorkHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6CAB72BE79A647F426975A /* WorkHistoryView.swift */; };
 		E15C43C0CA1B115E292315CC /* CPUMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C3ADAD1FD312D2827E58E0 /* CPUMonitor.swift */; };
 		EA29BA8640DC7870A2803340 /* DialogueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F9D10226EA432B42C3F37 /* DialogueManager.swift */; };
 /* End PBXBuildFile section */
@@ -63,7 +63,6 @@
 		135268895097DF67B90C4998 /* ScreenUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenUtility.swift; sourceTree = "<group>"; };
 		180040DBF6B50DDE00CE10A5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		19A5EA4C0F1F671D6E5837A8 /* WorkHistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHistoryStore.swift; sourceTree = "<group>"; };
-		A7E3B91D4F6C28A503D1E4F6 /* WorkHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHistoryView.swift; sourceTree = "<group>"; };
 		2063FCD01D68549A4D6F0BFF /* CharacterWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterWindow.swift; sourceTree = "<group>"; };
 		2A1D2071564CB99F5362AE80 /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 		3566C17FA493A4681918F5C7 /* StateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
@@ -72,6 +71,7 @@
 		3B1346570F1A5E89C9F2296A /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
 		411EA5113605FF7A3B410190 /* IrukaKun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IrukaKun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C27A7D980FA4FE1777F82F7 /* PositionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionStore.swift; sourceTree = "<group>"; };
+		4C6CAB72BE79A647F426975A /* WorkHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHistoryView.swift; sourceTree = "<group>"; };
 		4C8575AE916E0FD0435395F8 /* StateMachineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachineTests.swift; sourceTree = "<group>"; };
 		5B8F9D10226EA432B42C3F37 /* DialogueManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogueManager.swift; sourceTree = "<group>"; };
 		681D9C8436B936B7707E7E6A /* DialogueManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogueManagerTests.swift; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 			children = (
 				F14D62A0785D70E6D52AA533 /* SettingsView.swift */,
 				C595BA1A3EC9D90019498507 /* SettingsWindowController.swift */,
-				A7E3B91D4F6C28A503D1E4F6 /* WorkHistoryView.swift */,
+				4C6CAB72BE79A647F426975A /* WorkHistoryView.swift */,
 				3AC849DD357FF0467CBC56B1 /* WorkHistoryWindowController.swift */,
 			);
 			path = Settings;
@@ -335,7 +335,7 @@
 				78B482846A31DA699329E707 /* StatusBarController.swift in Sources */,
 				C8FDC070ACAEB4638F1EB4B9 /* TimeOfDay.swift in Sources */,
 				10C67E41B5FAC2B24F2BAEE2 /* WorkHistoryStore.swift in Sources */,
-				D5F1A83C7E924B6D08C3F2A1 /* WorkHistoryView.swift in Sources */,
+				DCD6939E8EA403538EAF7EB7 /* WorkHistoryView.swift in Sources */,
 				8F09905192AB0678718552A1 /* WorkHistoryWindowController.swift in Sources */,
 				7328DFA70FD5C6AC229CA2E2 /* WorkTimerOverlay.swift in Sources */,
 				252EBF1FD0CDECB9D184F86F /* WorkTracker.swift in Sources */,
