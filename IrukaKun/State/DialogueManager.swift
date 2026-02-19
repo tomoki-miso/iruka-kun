@@ -1,6 +1,7 @@
 import Foundation
 
 struct DialogueData: Codable {
+    let greeting: [String]
     let morning: [String]
     let afternoon: [String]
     let evening: [String]
@@ -18,7 +19,7 @@ final class DialogueManager: Sendable {
               let jsonData = try? Data(contentsOf: url),
               let decoded = try? JSONDecoder().decode(DialogueData.self, from: jsonData)
         else {
-            data = DialogueData(morning: [], afternoon: [], evening: [], night: [],
+            data = DialogueData(greeting: [], morning: [], afternoon: [], evening: [], night: [],
                                 clicked: [], dragged: [], bored: [])
             return
         }
@@ -48,5 +49,15 @@ final class DialogueManager: Sendable {
     func timeBasedDialogue(hour: Int) -> String? {
         let timeOfDay = TimeOfDay.from(hour: hour)
         return dialogues(for: timeOfDay).randomElement()
+    }
+
+    func randomGreeting() -> String? {
+        data.greeting.randomElement()
+    }
+
+    func randomIdleDialogue(hour: Int) -> String? {
+        let timeOfDay = TimeOfDay.from(hour: hour)
+        let pool = data.greeting + dialogues(for: timeOfDay) + data.bored
+        return pool.randomElement()
     }
 }
