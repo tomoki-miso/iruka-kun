@@ -5,8 +5,15 @@ final class BubbleView: NSView {
     private let label = NSTextField(labelWithString: "")
     private let padding: CGFloat = 10
     private let tailHeight: CGFloat = 8
-    private var fadeTimer: Timer?
-    private var originalWindowFrame: NSRect?
+    private let collapseThreshold = 20
+    private let collapsedMaxWidth: CGFloat = 120
+
+    private var hoverCheckTimer: Timer?
+    private var bubbleWindow: NSWindow?
+    private var fullText = ""
+    private var lastCharacterFrame: NSRect = .zero
+    private var isLongText = false
+    private var isExpanded = false
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -19,7 +26,6 @@ final class BubbleView: NSView {
 
     private func setup() {
         wantsLayer = true
-
         label.font = NSFont.systemFont(ofSize: 13, weight: .medium)
         label.textColor = .black
         label.backgroundColor = .clear
@@ -27,25 +33,80 @@ final class BubbleView: NSView {
         label.isEditable = false
         label.isSelectable = false
         label.alignment = .center
-        label.maximumNumberOfLines = 3
-        label.preferredMaxLayoutWidth = 160
         addSubview(label)
     }
 
     func show(text: String, relativeTo characterFrame: NSRect, in parentWindow: NSWindow) {
-        fadeTimer?.invalidate()
-        label.stringValue = text
-        label.sizeToFit()
+        hoverCheckTimer?.invalidate()
 
+        fullText = text
+        lastCharacterFrame = characterFrame
+        isLongText = text.count > collapseThreshold
+        isExpanded = false
+
+        applyLabelStyle()
+
+        if bubbleWindow == nil {
+            let window = NSWindow(
+                contentRect: .zero,
+                styleMask: .borderless,
+                backing: .buffered,
+                defer: false
+            )
+            window.isOpaque = false
+            window.backgroundColor = .clear
+            window.hasShadow = false
+            window.level = .floating
+            window.ignoresMouseEvents = true
+            window.contentView = self
+            bubbleWindow = window
+        }
+
+        guard let window = bubbleWindow else { return }
+
+        layoutBubble(parentWindow: parentWindow)
+
+        window.alphaValue = 1.0
+        if window.parent !== parentWindow {
+            window.parent?.removeChildWindow(window)
+            parentWindow.addChildWindow(window, ordered: .above)
+        }
+        window.orderFront(nil)
+
+        if isLongText {
+            startHoverCheck()
+        }
+
+        // No auto-fade; CharacterController drives text rotation
+    }
+
+    // MARK: - Label & Layout
+
+    private func applyLabelStyle() {
+        let collapsed = isLongText && !isExpanded
+        if collapsed {
+            label.maximumNumberOfLines = 1
+            label.lineBreakMode = .byTruncatingTail
+            label.preferredMaxLayoutWidth = collapsedMaxWidth
+            label.stringValue = fullText.replacingOccurrences(of: "\n", with: " ")
+        } else {
+            label.maximumNumberOfLines = 5
+            label.lineBreakMode = .byWordWrapping
+            label.preferredMaxLayoutWidth = 200
+            label.stringValue = fullText
+        }
+        label.sizeToFit()
+        if collapsed {
+            label.frame.size.width = min(label.frame.size.width, collapsedMaxWidth)
+        }
+    }
+
+    private func layoutBubble(parentWindow: NSWindow) {
         let bubbleWidth = label.frame.width + padding * 2
         let bubbleHeight = label.frame.height + padding * 2 + tailHeight
         let size = CGSize(width: max(bubbleWidth, 60), height: bubbleHeight)
 
-        // Position above character
-        let x = characterFrame.midX - size.width / 2
-        let y = characterFrame.maxY + 4
-        self.frame = NSRect(origin: CGPoint(x: x, y: y), size: size)
-
+        self.frame = NSRect(origin: .zero, size: size)
         label.frame = NSRect(
             x: padding,
             y: tailHeight + padding,
@@ -53,49 +114,51 @@ final class BubbleView: NSView {
             height: label.frame.height
         )
 
-        alphaValue = 1.0
-        isHidden = false
-        parentWindow.contentView?.addSubview(self)
+        guard let window = bubbleWindow else { return }
+        let parentFrame = parentWindow.frame
+        let windowX = parentFrame.origin.x + lastCharacterFrame.midX - size.width / 2
+        let windowY = parentFrame.origin.y + lastCharacterFrame.maxY + 4
+        window.setFrame(
+            NSRect(origin: CGPoint(x: windowX, y: windowY), size: size),
+            display: true
+        )
+        needsDisplay = true
+    }
 
-        // Restore window to original size before re-expanding
-        if let originalFrame = originalWindowFrame {
-            parentWindow.setFrame(originalFrame, display: false)
-            originalWindowFrame = nil
-        }
+    // MARK: - Hover Detection
 
-        // Adjust window size to fit bubble
-        var windowFrame = parentWindow.frame
-        let requiredTop = y + size.height
-        if requiredTop > windowFrame.size.height {
-            originalWindowFrame = windowFrame
-            let extraHeight = requiredTop - windowFrame.size.height
-            windowFrame.size.height += extraHeight
-            parentWindow.setFrame(windowFrame, display: true)
-        }
-
-        // Auto-fade after delay
-        let displayDuration = max(3.0, Double(text.count) * 0.15)
-        fadeTimer = Timer.scheduledTimer(withTimeInterval: displayDuration, repeats: false) { [weak self] _ in
+    private func startHoverCheck() {
+        hoverCheckTimer?.invalidate()
+        hoverCheckTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             Task { @MainActor in
-                self?.fadeOut()
+                self?.checkHover()
             }
         }
     }
 
-    private func fadeOut() {
-        NSAnimationContext.runAnimationGroup({ context in
-            context.duration = 0.5
-            self.animator().alphaValue = 0
-        }, completionHandler: { [weak self] in
-            self?.isHidden = true
-            if let originalFrame = self?.originalWindowFrame,
-               let window = self?.window {
-                window.setFrame(originalFrame, display: true)
-                self?.originalWindowFrame = nil
-            }
-            self?.removeFromSuperview()
-        })
+    private func checkHover() {
+        guard isLongText, let window = bubbleWindow, window.alphaValue > 0 else {
+            hoverCheckTimer?.invalidate()
+            return
+        }
+
+        let mouseLocation = NSEvent.mouseLocation
+        let isInside = window.frame.contains(mouseLocation)
+
+        if isInside && !isExpanded {
+            isExpanded = true
+            applyLabelStyle()
+            guard let parentWindow = window.parent else { return }
+            layoutBubble(parentWindow: parentWindow)
+        } else if !isInside && isExpanded {
+            isExpanded = false
+            applyLabelStyle()
+            guard let parentWindow = window.parent else { return }
+            layoutBubble(parentWindow: parentWindow)
+        }
     }
+
+    // MARK: - Drawing
 
     override func draw(_ dirtyRect: NSRect) {
         let bubbleRect = NSRect(
@@ -107,7 +170,6 @@ final class BubbleView: NSView {
 
         let path = NSBezierPath(roundedRect: bubbleRect, xRadius: 8, yRadius: 8)
 
-        // Tail
         let tailPath = NSBezierPath()
         let tailCenterX = bounds.midX
         tailPath.move(to: NSPoint(x: tailCenterX - 6, y: tailHeight))
@@ -122,11 +184,5 @@ final class BubbleView: NSView {
         NSColor.gray.withAlphaComponent(0.3).setStroke()
         path.lineWidth = 1
         path.stroke()
-    }
-
-    // Make bubble clickable (for hit test pass-through)
-    override func hitTest(_ point: NSPoint) -> NSView? {
-        let local = convert(point, from: superview)
-        return bounds.contains(local) && !isHidden ? self : nil
     }
 }

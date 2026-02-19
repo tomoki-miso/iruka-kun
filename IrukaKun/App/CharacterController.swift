@@ -93,10 +93,6 @@ final class CharacterController {
             self?.resetIdleTimer()
         }
 
-        // Bubble cycling
-        bubbleView.onFadeComplete = { [weak self] in
-            self?.scheduleNextBubble()
-        }
     }
 
     private func setupTimers() {
@@ -237,9 +233,9 @@ final class CharacterController {
     }
 
     private func showBubble(text: String) {
-        nextBubbleTimer?.invalidate()
         let charFrame = NSRect(origin: .zero, size: CharacterWindow.characterSize)
         bubbleView.show(text: text, relativeTo: charFrame, in: characterWindow)
+        scheduleNextBubble()
     }
 
     // MARK: - Bubble Cycling
@@ -252,7 +248,7 @@ final class CharacterController {
 
     private func scheduleNextBubble() {
         nextBubbleTimer?.invalidate()
-        nextBubbleTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+        nextBubbleTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { [weak self] _ in
             Task { @MainActor in
                 self?.showNextBubble()
             }
