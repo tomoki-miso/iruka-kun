@@ -41,6 +41,15 @@ final class WorkTracker {
         currentPreset = preset
     }
 
+    func clearPreset() {
+        if state != .idle, elapsedTime > 0 {
+            historyStore.addDuration(elapsedTime, for: sessionStartDate ?? Date(), preset: currentPreset)
+            elapsedTime = 0
+            sessionStartDate = Date()
+        }
+        currentPreset = nil
+    }
+
     func start() {
         guard state == .idle else { return }
         elapsedTime = 0

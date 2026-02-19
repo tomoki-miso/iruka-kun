@@ -33,17 +33,51 @@ final class CharacterController {
     private let floatAmplitude: CGFloat = 4.0
     private let floatPeriod: Double = 2.5
 
+    private let characterStore = CharacterStore()
+    private(set) var currentCharacterType: CharacterType = .iruka
+
     var isCharacterVisible: Bool { characterWindow.isVisible }
     var currentState: CharacterState { stateMachine.currentState }
     var onStateChanged: ((CharacterState) -> Void)?
+    var onCharacterChanged: ((CharacterType) -> Void)?
 
     init() {
         characterView = CharacterView(frame: NSRect(origin: .zero, size: CharacterWindow.characterSize))
         characterWindow.contentView = characterView
+
+        let savedType = characterStore.load()
+        if savedType != .iruka {
+            currentCharacterType = savedType
+            characterView.switchCharacter(savedType)
+        }
+
         setupCallbacks()
         setupTimers()
         workTimerOverlay.attach(to: characterWindow)
         startFloating()
+    }
+
+    func switchCharacter(to type: CharacterType) {
+        guard type != currentCharacterType else { return }
+        currentCharacterType = type
+        characterStore.save(type)
+        characterView.switchCharacter(type)
+        onCharacterChanged?(type)
+    }
+
+    func addCustomCharacter(name: String, imageURL: URL) -> CharacterType? {
+        guard let type = CustomCharacterManager.shared.addCharacter(name: name, imageURL: imageURL) else {
+            return nil
+        }
+        switchCharacter(to: type)
+        return type
+    }
+
+    func removeCustomCharacter(_ id: String) {
+        if case .custom(let currentId) = currentCharacterType, currentId == id {
+            switchCharacter(to: .iruka)
+        }
+        CustomCharacterManager.shared.removeCharacter(id)
     }
 
     func updateWorkTimer(elapsed: TimeInterval, state: WorkTracker.State, preset: String? = nil) {

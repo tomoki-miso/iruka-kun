@@ -10,6 +10,7 @@
 		10C67E41B5FAC2B24F2BAEE2 /* WorkHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A5EA4C0F1F671D6E5837A8 /* WorkHistoryStore.swift */; };
 		252EBF1FD0CDECB9D184F86F /* WorkTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCACEF3CAAB55150BCB5B2B /* WorkTracker.swift */; };
 		2C46C5E7A204819D4541650D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0988347F8D32103C493941 /* AppDelegate.swift */; };
+		32061AA0975F4889B5FA7925 /* CharacterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0365A0E37337C360207D1E14 /* CharacterType.swift */; };
 		4037CEA7E9A7CE3A8C6AAB1F /* PositionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971EEBE20FB8A2A2E42A5556 /* PositionStoreTests.swift */; };
 		4724AF59053BDA9345083F12 /* IrukaKunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DDC50FC7524C15CBB70D6B /* IrukaKunTests.swift */; };
 		4945AC894695FA38B82D85AD /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C595BA1A3EC9D90019498507 /* SettingsWindowController.swift */; };
@@ -27,9 +28,11 @@
 		94B7A9B3ACC709A52C3CF1BC /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E573B33DC52590F0C535395A /* CharacterView.swift */; };
 		A673B53A79FCD4407B1731CD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180040DBF6B50DDE00CE10A5 /* main.swift */; };
 		A74CD70C2E8B793606047B57 /* CharacterWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2063FCD01D68549A4D6F0BFF /* CharacterWindow.swift */; };
+		A7695C61654EC54ADBC6D968 /* CustomCharacterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F26BEDD5A703F290856A36 /* CustomCharacterManager.swift */; };
 		B40C6C36ED1D12E06654814F /* WorkHistoryStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D0D9D4AE2EBFAA2B20400 /* WorkHistoryStoreTests.swift */; };
 		B51AF5271CA943F840311037 /* MeigenFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BC447B301FA1345CA3A0D5 /* MeigenFetcher.swift */; };
 		B67AAD77F857D10ACD250EB0 /* CharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F10C78643B6C6D37E28592 /* CharacterController.swift */; };
+		B9536167A58AA655E84E1FCF /* rakko_idle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 043DA89094BCAECE79F1F729 /* rakko_idle_0.png */; };
 		B9B790A29644CD10136E0A79 /* DialogueManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681D9C8436B936B7707E7E6A /* DialogueManagerTests.swift */; };
 		BA49763B25B5ABB151CFDBAC /* WorkTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E0806E96FCBF1953927B68 /* WorkTrackerTests.swift */; };
 		BC2901D7CC29293DD5CFA628 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14D62A0785D70E6D52AA533 /* SettingsView.swift */; };
@@ -37,6 +40,7 @@
 		C49F9DEB671B810A09CC6A27 /* Dialogues.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A663F7C23BC562FD0778DAE /* Dialogues.json */; };
 		C8FDC070ACAEB4638F1EB4B9 /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738E61381E45DEA0F7402BD /* TimeOfDay.swift */; };
 		D31E02632534DB809FA3740D /* iruka_idle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = B6183D7C6F25B2C52C138F7B /* iruka_idle_0.png */; };
+		D8BD6BB4EFA32720BF29BF7E /* CharacterStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B2827AD80FA08E36E28B4B /* CharacterStore.swift */; };
 		DCD6939E8EA403538EAF7EB7 /* WorkHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6CAB72BE79A647F426975A /* WorkHistoryView.swift */; };
 		E15C43C0CA1B115E292315CC /* CPUMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C3ADAD1FD312D2827E58E0 /* CPUMonitor.swift */; };
 		EA29BA8640DC7870A2803340 /* DialogueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F9D10226EA432B42C3F37 /* DialogueManager.swift */; };
@@ -54,7 +58,9 @@
 
 /* Begin PBXFileReference section */
 		0192512925EAE39848A5D565 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
+		0365A0E37337C360207D1E14 /* CharacterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterType.swift; sourceTree = "<group>"; };
 		037A549C9EC3C3BEDD61E0AA /* CharacterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterState.swift; sourceTree = "<group>"; };
+		043DA89094BCAECE79F1F729 /* rakko_idle_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rakko_idle_0.png; sourceTree = "<group>"; };
 		06E0806E96FCBF1953927B68 /* WorkTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTrackerTests.swift; sourceTree = "<group>"; };
 		07C3ADAD1FD312D2827E58E0 /* CPUMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUMonitor.swift; sourceTree = "<group>"; };
 		093D0D9D4AE2EBFAA2B20400 /* WorkHistoryStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHistoryStoreTests.swift; sourceTree = "<group>"; };
@@ -86,7 +92,9 @@
 		D2BC447B301FA1345CA3A0D5 /* MeigenFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeigenFetcher.swift; sourceTree = "<group>"; };
 		D2F10C78643B6C6D37E28592 /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
 		DAEC36907ABD0F40CEDA6803 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E3F26BEDD5A703F290856A36 /* CustomCharacterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCharacterManager.swift; sourceTree = "<group>"; };
 		E573B33DC52590F0C535395A /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
+		E9B2827AD80FA08E36E28B4B /* CharacterStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterStore.swift; sourceTree = "<group>"; };
 		F14D62A0785D70E6D52AA533 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FD51F7CBD6344C6BDCD768D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				037A549C9EC3C3BEDD61E0AA /* CharacterState.swift */,
+				0365A0E37337C360207D1E14 /* CharacterType.swift */,
 				5B8F9D10226EA432B42C3F37 /* DialogueManager.swift */,
 				3566C17FA493A4681918F5C7 /* StateMachine.swift */,
 				3738E61381E45DEA0F7402BD /* TimeOfDay.swift */,
@@ -163,7 +172,9 @@
 		6A17B054F1F4F42067AA9328 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				E9B2827AD80FA08E36E28B4B /* CharacterStore.swift */,
 				07C3ADAD1FD312D2827E58E0 /* CPUMonitor.swift */,
+				E3F26BEDD5A703F290856A36 /* CustomCharacterManager.swift */,
 				D2BC447B301FA1345CA3A0D5 /* MeigenFetcher.swift */,
 				4C27A7D980FA4FE1777F82F7 /* PositionStore.swift */,
 				135268895097DF67B90C4998 /* ScreenUtility.swift */,
@@ -185,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				B6183D7C6F25B2C52C138F7B /* iruka_idle_0.png */,
+				043DA89094BCAECE79F1F729 /* rakko_idle_0.png */,
 			);
 			path = Sprites;
 			sourceTree = "<group>";
@@ -306,6 +318,7 @@
 				64D8916F761408CDD123EB3C /* Assets.xcassets in Resources */,
 				C49F9DEB671B810A09CC6A27 /* Dialogues.json in Resources */,
 				D31E02632534DB809FA3740D /* iruka_idle_0.png in Resources */,
+				B9536167A58AA655E84E1FCF /* rakko_idle_0.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,8 +334,11 @@
 				E15C43C0CA1B115E292315CC /* CPUMonitor.swift in Sources */,
 				B67AAD77F857D10ACD250EB0 /* CharacterController.swift in Sources */,
 				528722FD1BED7E816DCA91F7 /* CharacterState.swift in Sources */,
+				D8BD6BB4EFA32720BF29BF7E /* CharacterStore.swift in Sources */,
+				32061AA0975F4889B5FA7925 /* CharacterType.swift in Sources */,
 				94B7A9B3ACC709A52C3CF1BC /* CharacterView.swift in Sources */,
 				A74CD70C2E8B793606047B57 /* CharacterWindow.swift in Sources */,
+				A7695C61654EC54ADBC6D968 /* CustomCharacterManager.swift in Sources */,
 				EA29BA8640DC7870A2803340 /* DialogueManager.swift in Sources */,
 				B51AF5271CA943F840311037 /* MeigenFetcher.swift in Sources */,
 				504426B00013376E2B1A108C /* PositionStore.swift in Sources */,

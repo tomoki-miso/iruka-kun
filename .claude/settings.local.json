@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\ndocs: iruka-kun 設計ドキュメントとアセットを追加\n\nデスクトップキャラクターアプリの要件定義・設計ドキュメントと\nベースとなるイルカのドット絵\\(PNG\\)・ベクター\\(SVG\\)アセットを追加。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(xcode-select:*)",
+      "Bash(swift:*)",
+      "Bash(xcodebuild:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\ndocs: 実装計画を追加、設計ドキュメントを承認済みに更新\n\n15タスクの段階的実装計画。TDDで状態マシン・セリフ管理・位置永続化をテスト。\nXcodeGen + AppKit + SwiftUI ハイブリッド構成。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(brew install:*)",
+      "Bash(xcodegen generate:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: プロジェクトスキャフォールディング\n\nXcodeGenベースのプロジェクト構成。LSUIElement=YES、macOS 15+。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: メニューバー常駐と基本メニュー\n\nNSStatusItemでメニューバーにアイコン表示。表示/非表示トグルと終了メニュー。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: 透過フローティングウィンドウ\n\nborderless + 透明背景 + 常に最前面のNSWindow。画面右下に初期配置。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: 静的スプライト表示\n\nCALayerベースのCharacterViewでiruka.pngをウィンドウに表示。nearest neighborフィルタでドット絵の鮮明さを維持。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: 状態マシン（5状態 + イベント駆動遷移）\n\nCharacterState: idle/happy/sleeping/surprised/bored\nStateMachine: イベントに基づく状態遷移。sleepingは粘着的。テスト11件。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: セリフデータとDialogueManager\n\nDialogues.json: 7カテゴリ計33セリフ。TimeOfDay: 時間帯分類。DialogueManager: イベント/時間帯に応じたセリフ選択。テスト7件。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: SpriteAnimator\n\n状態ごとのスプライトフレーム配列を管理し、Timerベースでフレーム切り替え。10fps。フレーム不足時はフォールバック。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: ヒットテスト、ドラッグ移動、位置永続化\n\n透明ピクセルのクリックスルー（alpha閾値30）。ドラッグで移動可。UserDefaultsで位置を保存・復元。テスト2件追加。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit:*)",
+      "Bash(git rm:*)",
+      "Bash(pgrep:*)",
+      "Bash(git stash:*)",
+      "Bash(git checkout:*)",
+      "Bash(log show:*)",
+      "Bash(bash -c 'log show --predicate \"\"process == \\\\\"\"iruka-kun\\\\\"\"\"\" --last 2m 2>&1 | tail -30')",
+      "Bash(pkill:*)",
+      "Bash(open:*)",
+      "Bash(git merge:*)",
+      "WebFetch(domain:meigen.doodlenote.net)",
+      "Bash(wc:*)",
+      "Bash(sips:*)",
+      "Bash(ls:*)",
+      "Bash(/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -f \"/Users/misoshiru/Library/Developer/Xcode/DerivedData/IrukaKun-avvjprmdhmkogyhjegjwmsugsxme/Build/Products/Debug/iruka-kun.app\")",
+      "Bash(find:*)"
+    ]
+  }
+}

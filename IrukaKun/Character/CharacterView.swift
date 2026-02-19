@@ -30,7 +30,7 @@ final class CharacterView: NSView {
         imageLayer.magnificationFilter = .nearest
         layer.addSublayer(imageLayer)
 
-        if let image = NSImage(named: "iruka_idle_0") {
+        if let image = animator.currentFallbackImage() {
             imageLayer.contents = image
         }
     }
@@ -49,6 +49,14 @@ final class CharacterView: NSView {
 
     func setSprite(_ image: NSImage) {
         imageLayer.contents = image
+    }
+
+    func switchCharacter(_ type: CharacterType) {
+        animator.switchCharacter(type)
+        if let image = animator.currentFallbackImage() {
+            imageLayer.contents = image
+        }
+        animator.play(state: .idle)
     }
 
     // MARK: - Hit Testing

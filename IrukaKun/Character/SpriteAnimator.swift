@@ -8,15 +8,29 @@ final class SpriteAnimator {
     private var timer: Timer?
     private let fps: Double = 10.0
 
+    private(set) var characterType: CharacterType
+
     var onFrameChanged: ((NSImage) -> Void)?
 
-    init() {
+    init(characterType: CharacterType = .iruka) {
+        self.characterType = characterType
         loadSprites()
     }
 
     private func loadSprites() {
+        framesByState = [:]
+
+        switch characterType {
+        case .iruka, .rakko:
+            loadBuiltInSprites()
+        case .custom(let id):
+            loadCustomSprite(id: id)
+        }
+    }
+
+    private func loadBuiltInSprites() {
         for state in [CharacterState.idle, .happy, .sleeping, .surprised, .bored] {
-            let prefix = spritePrefix(for: state)
+            let prefix = characterType.spritePrefix(for: state)
             var frames: [NSImage] = []
             for i in 0..<10 {
                 let name = "\(prefix)_\(i)"
@@ -24,21 +38,32 @@ final class SpriteAnimator {
                     frames.append(image)
                 }
             }
-            // If no specific frames, fall back to idle frame 0
-            if frames.isEmpty, let fallback = NSImage(named: "iruka_idle_0") {
+            if frames.isEmpty, let fallback = NSImage(named: characterType.fallbackSpriteName) {
                 frames.append(fallback)
             }
             framesByState[state] = frames
         }
     }
 
-    private func spritePrefix(for state: CharacterState) -> String {
-        switch state {
-        case .idle: return "iruka_idle"
-        case .happy: return "iruka_happy"
-        case .sleeping: return "iruka_sleeping"
-        case .surprised: return "iruka_surprised"
-        case .bored: return "iruka_bored"
+    private func loadCustomSprite(id: String) {
+        guard let image = CustomCharacterManager.shared.loadImage(for: id) else { return }
+        for state in [CharacterState.idle, .happy, .sleeping, .surprised, .bored] {
+            framesByState[state] = [image]
+        }
+    }
+
+    func switchCharacter(_ type: CharacterType) {
+        stop()
+        characterType = type
+        loadSprites()
+    }
+
+    func currentFallbackImage() -> NSImage? {
+        switch characterType {
+        case .iruka, .rakko:
+            return NSImage(named: characterType.fallbackSpriteName)
+        case .custom(let id):
+            return CustomCharacterManager.shared.loadImage(for: id)
         }
     }
 

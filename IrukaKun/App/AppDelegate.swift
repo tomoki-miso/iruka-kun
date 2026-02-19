@@ -25,6 +25,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func setupMenuBar() {
+        statusBarController.currentCharacterProvider = { [weak self] in
+            self?.characterController?.currentCharacterType ?? .iruka
+        }
         statusBarController.setup()
         statusBarController.currentStateProvider = { [weak self] in
             self?.characterController?.currentState ?? .idle
@@ -56,10 +59,29 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         statusBarController.onSelectPreset = { [weak self] name in
             self?.workTracker?.switchPreset(to: name)
+            self?.statusBarController.updateWorkMenu()
+        }
+        statusBarController.onClearPreset = { [weak self] in
+            self?.workTracker?.clearPreset()
+            self?.statusBarController.updateWorkMenu()
         }
         statusBarController.onAddPreset = { [weak self] name in
             self?.workHistoryStore.addPreset(name)
             self?.workTracker?.switchPreset(to: name)
+            self?.statusBarController.updateWorkMenu()
+        }
+        statusBarController.onSwitchCharacter = { [weak self] type in
+            self?.characterController?.switchCharacter(to: type)
+        }
+        statusBarController.customCharacterNamesProvider = {
+            CustomCharacterManager.shared.customCharacterNames()
+        }
+        statusBarController.onAddCustomCharacter = { [weak self] name, url in
+            _ = self?.characterController?.addCustomCharacter(name: name, imageURL: url)
+            self?.statusBarController.updateWorkMenu()
+        }
+        statusBarController.onRemoveCustomCharacter = { [weak self] id in
+            self?.characterController?.removeCustomCharacter(id)
             self?.statusBarController.updateWorkMenu()
         }
         statusBarController.onQuit = {
@@ -67,6 +89,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         characterController?.onStateChanged = { [weak self] _ in
+            self?.statusBarController.updateStateDisplay()
+        }
+        characterController?.onCharacterChanged = { [weak self] type in
+            self?.statusBarController.updateMenuBarIcon(type)
+            self?.statusBarController.updateWorkMenu()
             self?.statusBarController.updateStateDisplay()
         }
 
