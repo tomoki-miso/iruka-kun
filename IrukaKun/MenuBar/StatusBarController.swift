@@ -7,7 +7,6 @@ final class StatusBarController {
     private var workToggleMenuItem: NSMenuItem?
     private var todayTotalMenuItem: NSMenuItem?
 
-    var onToggleCharacter: (() -> Void)?
     var onOpenSettings: (() -> Void)?
     var onQuit: (() -> Void)?
     var onToggleWork: (() -> Void)?
@@ -71,9 +70,9 @@ final class StatusBarController {
         case .idle:
             workToggleMenuItem?.title = "▶ 作業を開始"
         case .tracking:
-            workToggleMenuItem?.title = "⏸ 作業を中断"
+            workToggleMenuItem?.title = "⏹ 作業を中止"
         case .paused:
-            workToggleMenuItem?.title = "⏸ 作業を中断"
+            workToggleMenuItem?.title = "⏹ 作業を中止"
         }
 
         let total = todayTotalProvider?() ?? 0
@@ -110,7 +109,9 @@ final class StatusBarController {
         let menu = NSMenu()
 
         // Work tracker toggle
-        let workItem = NSMenuItem(title: "▶ 作業を開始", action: #selector(toggleWork), keyEquivalent: "w")
+        let workState = workStateProvider?() ?? .idle
+        let workTitle = workState == .idle ? "▶ 作業を開始" : "⏹ 作業を中止"
+        let workItem = NSMenuItem(title: workTitle, action: #selector(toggleWork), keyEquivalent: "w")
         workToggleMenuItem = workItem
         menu.addItem(workItem)
 
@@ -127,10 +128,6 @@ final class StatusBarController {
         todayTotalMenuItem = totalItem
         menu.addItem(totalItem)
 
-        menu.addItem(NSMenuItem.separator())
-
-        // Character section
-        menu.addItem(NSMenuItem(title: "イルカを表示/非表示", action: #selector(toggleCharacter), keyEquivalent: "i"))
         menu.addItem(NSMenuItem.separator())
 
         let stateItem = NSMenuItem(title: "状態: 🏊 泳いでいる", action: nil, keyEquivalent: "")
@@ -196,7 +193,6 @@ final class StatusBarController {
     }
 
     @objc private func toggleWork() { onToggleWork?() }
-    @objc private func toggleCharacter() { onToggleCharacter?() }
     @objc private func showHistory() { onShowHistory?() }
     @objc private func openSettings() { onOpenSettings?() }
     @objc private func quit() { onQuit?() }

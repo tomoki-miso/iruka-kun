@@ -35,9 +35,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarController.todayTotalProvider = { [weak self] in
             self?.workTracker?.todayTotal ?? 0
         }
-        statusBarController.onToggleCharacter = { [weak self] in
-            self?.characterController?.toggleCharacter()
-        }
         statusBarController.onToggleWork = { [weak self] in
             self?.toggleWork()
         }
