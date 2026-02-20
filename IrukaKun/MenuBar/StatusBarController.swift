@@ -59,6 +59,10 @@ final class StatusBarController {
         case .idle:
             if case .rakko = characterType {
                 label = "🏊 浮かんでいる"
+            } else if case .ono = characterType {
+                label = "💼 仕事をしている"
+            } else if case .syacho = characterType {
+                label = "💼 仕事をしている"
             } else if characterType.isBuiltIn {
                 label = "🏊 泳いでいる"
             } else {

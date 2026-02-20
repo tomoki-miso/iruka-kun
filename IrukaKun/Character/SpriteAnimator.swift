@@ -21,7 +21,7 @@ final class SpriteAnimator {
         framesByState = [:]
 
         switch characterType {
-        case .iruka, .rakko:
+        case .iruka, .rakko, .ono, .syacho:
             loadBuiltInSprites()
         case .custom(let id):
             loadCustomSprite(id: id)
@@ -60,7 +60,7 @@ final class SpriteAnimator {
 
     func currentFallbackImage() -> NSImage? {
         switch characterType {
-        case .iruka, .rakko:
+        case .iruka, .rakko, .ono, .syacho:
             return NSImage(named: characterType.fallbackSpriteName)
         case .custom(let id):
             return CustomCharacterManager.shared.loadImage(for: id)

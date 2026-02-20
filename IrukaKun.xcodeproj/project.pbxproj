@@ -39,9 +39,11 @@
 		BCF72AF74F441239F7604A7D /* StateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8575AE916E0FD0435395F8 /* StateMachineTests.swift */; };
 		C49F9DEB671B810A09CC6A27 /* Dialogues.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A663F7C23BC562FD0778DAE /* Dialogues.json */; };
 		C8FDC070ACAEB4638F1EB4B9 /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738E61381E45DEA0F7402BD /* TimeOfDay.swift */; };
+		CC5BDA5FF0E75A30E7DD485A /* ono_idle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = ADF0384259EE355B1DB7A298 /* ono_idle_0.png */; };
 		D31E02632534DB809FA3740D /* iruka_idle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = B6183D7C6F25B2C52C138F7B /* iruka_idle_0.png */; };
 		D8BD6BB4EFA32720BF29BF7E /* CharacterStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B2827AD80FA08E36E28B4B /* CharacterStore.swift */; };
 		DCD6939E8EA403538EAF7EB7 /* WorkHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6CAB72BE79A647F426975A /* WorkHistoryView.swift */; };
+		DD2DEC551D4631D36F73EE8C /* syacho_idle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = A4006B242EA72F5FBA71191E /* syacho_idle_0.png */; };
 		E15C43C0CA1B115E292315CC /* CPUMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C3ADAD1FD312D2827E58E0 /* CPUMonitor.swift */; };
 		EA29BA8640DC7870A2803340 /* DialogueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F9D10226EA432B42C3F37 /* DialogueManager.swift */; };
 /* End PBXBuildFile section */
@@ -85,7 +87,9 @@
 		76DDC50FC7524C15CBB70D6B /* IrukaKunTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IrukaKunTests.swift; sourceTree = "<group>"; };
 		971EEBE20FB8A2A2E42A5556 /* PositionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionStoreTests.swift; sourceTree = "<group>"; };
 		9C0988347F8D32103C493941 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A4006B242EA72F5FBA71191E /* syacho_idle_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = syacho_idle_0.png; sourceTree = "<group>"; };
 		A441095A1AF6C871A3BA6F65 /* SpriteAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteAnimator.swift; sourceTree = "<group>"; };
+		ADF0384259EE355B1DB7A298 /* ono_idle_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ono_idle_0.png; sourceTree = "<group>"; };
 		B6183D7C6F25B2C52C138F7B /* iruka_idle_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iruka_idle_0.png; sourceTree = "<group>"; };
 		C561C962AA2F39E5309AAC48 /* WorkTimerOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTimerOverlay.swift; sourceTree = "<group>"; };
 		C595BA1A3EC9D90019498507 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
@@ -196,7 +200,9 @@
 			isa = PBXGroup;
 			children = (
 				B6183D7C6F25B2C52C138F7B /* iruka_idle_0.png */,
+				ADF0384259EE355B1DB7A298 /* ono_idle_0.png */,
 				043DA89094BCAECE79F1F729 /* rakko_idle_0.png */,
+				A4006B242EA72F5FBA71191E /* syacho_idle_0.png */,
 			);
 			path = Sprites;
 			sourceTree = "<group>";
@@ -318,7 +324,9 @@
 				64D8916F761408CDD123EB3C /* Assets.xcassets in Resources */,
 				C49F9DEB671B810A09CC6A27 /* Dialogues.json in Resources */,
 				D31E02632534DB809FA3740D /* iruka_idle_0.png in Resources */,
+				CC5BDA5FF0E75A30E7DD485A /* ono_idle_0.png in Resources */,
 				B9536167A58AA655E84E1FCF /* rakko_idle_0.png in Resources */,
+				DD2DEC551D4631D36F73EE8C /* syacho_idle_0.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
