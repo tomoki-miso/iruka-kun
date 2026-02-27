@@ -6,6 +6,7 @@ final class WorkTimerOverlay {
     private let backgroundView: NSView
     private let label: NSTextField
     private static let height: CGFloat = 20
+    private var isActive = false
 
     init() {
         let frame = NSRect(x: 0, y: 0, width: 80, height: Self.height)
@@ -44,23 +45,34 @@ final class WorkTimerOverlay {
 
     func attach(to parentWindow: NSWindow) {
         parentWindow.addChildWindow(window, ordered: .below)
+        window.orderOut(nil)
+    }
+
+    /// 親ウィンドウ表示時に呼び出し、idle なら非表示を維持する
+    func syncVisibility() {
+        if !isActive {
+            window.orderOut(nil)
+        }
     }
 
     func update(elapsed: TimeInterval, state: WorkTracker.State, preset: String? = nil) {
         switch state {
         case .tracking:
+            isActive = true
             if let preset {
                 label.stringValue = "\(preset) \(formatTime(elapsed))"
             } else {
                 label.stringValue = formatTime(elapsed)
             }
         case .paused:
+            isActive = true
             if let preset {
                 label.stringValue = "\(preset) \(formatTime(elapsed)) ⏸"
             } else {
                 label.stringValue = "\(formatTime(elapsed)) ⏸"
             }
         case .idle:
+            isActive = false
             window.orderOut(nil)
             return
         }

@@ -5,23 +5,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let statusBarController = StatusBarController()
     private let settingsWindowController = SettingsWindowController()
     private let workHistoryWindowController = WorkHistoryWindowController()
+    private let meigenHistoryWindowController = MeigenHistoryWindowController()
     private let workHistoryStore = WorkHistoryStore()
+    private let meigenHistoryStore = MeigenHistoryStore()
     private var workTracker: WorkTracker?
     private var characterController: CharacterController?
+    private var commandExplainWatcher: CommandExplainWatcher?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSLog("[iruka-kun] applicationDidFinishLaunching called")
+        HookInstaller.installIfNeeded()
         characterController = CharacterController()
+        characterController?.meigenHistoryStore = meigenHistoryStore
         characterController?.showCharacter()
 
         workTracker = WorkTracker(historyStore: workHistoryStore)
         setupMenuBar()
         setupWorkTracker()
+        setupCommandExplainWatcher()
         NSLog("[iruka-kun] setup complete")
     }
 
     func applicationWillTerminate(_ notification: Notification) {
         workTracker?.stop()
+        commandExplainWatcher?.stop()
     }
 
     private func setupMenuBar() {
@@ -47,6 +54,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarController.onShowHistory = { [weak self] in
             guard let self else { return }
             self.workHistoryWindowController.show(historyStore: self.workHistoryStore)
+        }
+        statusBarController.onShowMeigenHistory = { [weak self] in
+            guard let self else { return }
+            self.meigenHistoryWindowController.show(historyStore: self.meigenHistoryStore)
         }
         statusBarController.presetsProvider = { [weak self] in
             self?.workHistoryStore.presets ?? []
@@ -98,6 +109,32 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         statusBarController.updateWorkMenu()
+    }
+
+    private func setupCommandExplainWatcher() {
+        let watcher = CommandExplainWatcher()
+        watcher.onCommandExplain = { [weak self] command, explanation in
+            Task { @MainActor in
+                self?.characterController?.showCommandExplanation(command: command, explanation: explanation)
+            }
+        }
+        watcher.onCommandDismiss = { [weak self] in
+            Task { @MainActor in
+                self?.characterController?.dismissCommandExplanation()
+            }
+        }
+        watcher.start()
+
+        characterController?.onAllowCommand = { [weak self] in
+            self?.commandExplainWatcher?.respond(decision: "allow")
+        }
+        characterController?.onAllowAlwaysCommand = { [weak self] in
+            self?.commandExplainWatcher?.respond(decision: "allowAlways")
+        }
+        characterController?.onDenyCommand = { [weak self] in
+            self?.commandExplainWatcher?.respond(decision: "deny")
+        }
+        commandExplainWatcher = watcher
     }
 
     private func setupWorkTracker() {

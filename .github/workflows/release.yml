@@ -1,0 +1,81 @@
+name: Build & Release DMG
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode 16
+        run: |
+          XCODE_PATH=$(ls -d /Applications/Xcode_16*.app 2>/dev/null | head -1)
+          if [ -z "$XCODE_PATH" ]; then
+            echo "::error::Xcode 16 not found"
+            exit 1
+          fi
+          sudo xcode-select -s "$XCODE_PATH/Contents/Developer"
+          xcodebuild -version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Run tests
+        run: |
+          xcodebuild test \
+            -project IrukaKun.xcodeproj \
+            -scheme IrukaKun \
+            -configuration Debug \
+            -derivedDataPath build/DerivedData \
+            -destination 'platform=macOS'
+
+      - name: Build DMG
+        run: ./scripts/build-dmg.sh
+
+      - name: Extract version
+        id: version
+        run: |
+          VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" IrukaKun/Info.plist)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Update latest release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          SHORT_SHA="${GITHUB_SHA::7}"
+          DMG_NAME="IrukaKun-${VERSION}.dmg"
+
+          gh release delete latest --yes --cleanup-tag 2>/dev/null || true
+
+          gh release create latest \
+            "build/${DMG_NAME}" \
+            --title "iruka-kun v${VERSION} (${SHORT_SHA})" \
+            --notes "## iruka-kun v${VERSION}
+
+          **Commit:** \`${SHORT_SHA}\`
+          **Date:** $(date -u '+%Y-%m-%d %H:%M UTC')
+
+          ### インストール
+          1. \`${DMG_NAME}\` をダウンロード
+          2. DMG を開く
+          3. iruka-kun.app を Applications にドラッグ
+
+          > Ad-hoc 署名のため、初回起動時に右クリック → 「開く」が必要です。" \
+            --target "$GITHUB_SHA" \
+            --latest

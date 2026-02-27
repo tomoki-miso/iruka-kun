@@ -8,12 +8,11 @@ struct MeigenResponse: Codable {
 final class MeigenFetcher: Sendable {
     private static let endpoint = URL(string: "https://meigen.doodlenote.net/api/json.php")!
 
-    func fetch() async -> String? {
+    func fetch() async -> MeigenResponse? {
         do {
             let (data, _) = try await URLSession.shared.data(from: Self.endpoint)
             let items = try JSONDecoder().decode([MeigenResponse].self, from: data)
-            guard let item = items.first else { return nil }
-            return "\(item.meigen)\n— \(item.auther)"
+            return items.first
         } catch {
             return nil
         }

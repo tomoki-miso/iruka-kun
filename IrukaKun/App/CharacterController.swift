@@ -11,6 +11,7 @@ final class CharacterController {
     private let workTimerOverlay = WorkTimerOverlay()
     private let cpuMonitor = CPUMonitor()
     private let meigenFetcher = MeigenFetcher()
+    var meigenHistoryStore: MeigenHistoryStore?
 
     private var dialogueTimer: Timer?
     private var idleTimer: Timer?
@@ -18,6 +19,7 @@ final class CharacterController {
     private var floatTimer: Timer?
     private var cpuTimer: Timer?
     private var nextBubbleTimer: Timer?
+    private var isShowingCommandExplanation = false
     private var lastTimeOfDay: TimeOfDay?
     private var lastCPULevel: CPUMonitor.Level = .low
     private var floatPhase: Double = 0
@@ -40,6 +42,9 @@ final class CharacterController {
     var currentState: CharacterState { stateMachine.currentState }
     var onStateChanged: ((CharacterState) -> Void)?
     var onCharacterChanged: ((CharacterType) -> Void)?
+    var onAllowCommand: (() -> Void)?
+    var onAllowAlwaysCommand: (() -> Void)?
+    var onDenyCommand: (() -> Void)?
 
     init() {
         characterView = CharacterView(frame: NSRect(origin: .zero, size: CharacterWindow.characterSize))
@@ -54,6 +59,23 @@ final class CharacterController {
         setupCallbacks()
         setupTimers()
         workTimerOverlay.attach(to: characterWindow)
+
+        bubbleView.onDismissCopyMode = { [weak self] in
+            self?.onDenyCommand?()
+            self?.dismissCommandExplanation()
+        }
+        bubbleView.onAllowCommand = { [weak self] in
+            self?.onAllowCommand?()
+            self?.dismissCommandExplanation()
+        }
+        bubbleView.onAllowAlwaysCommand = { [weak self] in
+            self?.onAllowAlwaysCommand?()
+            self?.dismissCommandExplanation()
+        }
+        bubbleView.onDenyCommand = { [weak self] in
+            self?.onDenyCommand?()
+            self?.dismissCommandExplanation()
+        }
         startFloating()
     }
 
@@ -86,6 +108,7 @@ final class CharacterController {
 
     func showCharacter() {
         characterWindow.orderFront(nil)
+        workTimerOverlay.syncVisibility()
         showGreeting()
     }
 
@@ -256,6 +279,7 @@ final class CharacterController {
     // MARK: - Dialogue
 
     private func showDialogueForEvent(_ event: CharacterEvent) {
+        guard !isShowingCommandExplanation else { return }
         guard let text = dialogueManager.dialogueForEvent(event) else { return }
         showBubble(text: text)
     }
@@ -267,8 +291,34 @@ final class CharacterController {
     }
 
     private func showBubble(text: String) {
+        isShowingCommandExplanation = false
         let charFrame = NSRect(origin: .zero, size: CharacterWindow.characterSize)
-        bubbleView.show(text: text, relativeTo: charFrame, in: characterWindow)
+        bubbleView.show(text: text, copyable: false, relativeTo: charFrame, in: characterWindow)
+        scheduleNextBubble()
+    }
+
+    // MARK: - Command Explanation
+
+    func dismissCommandExplanation() {
+        guard isShowingCommandExplanation else { return }
+        isShowingCommandExplanation = false
+        let hour = Calendar.current.component(.hour, from: Date())
+        if let text = dialogueManager.randomIdleDialogue(hour: hour) {
+            let charFrame = NSRect(origin: .zero, size: CharacterWindow.characterSize)
+            bubbleView.show(text: text, copyable: false, relativeTo: charFrame, in: characterWindow)
+            scheduleNextBubble()
+        }
+    }
+
+    func showCommandExplanation(command: String, explanation: String) {
+        let cleaned = explanation
+            .components(separatedBy: .newlines)
+            .filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+            .joined(separator: "\n")
+        let text = "💻 \(command)\n\(cleaned)"
+        isShowingCommandExplanation = true
+        let charFrame = NSRect(origin: .zero, size: CharacterWindow.characterSize)
+        bubbleView.show(text: text, copyable: true, relativeTo: charFrame, in: characterWindow)
         scheduleNextBubble()
     }
 
@@ -292,8 +342,9 @@ final class CharacterController {
     private func showNextBubble() {
         if Int.random(in: 0..<5) == 0 {
             Task {
-                if let meigen = await meigenFetcher.fetch() {
-                    showBubble(text: meigen)
+                if let response = await meigenFetcher.fetch() {
+                    meigenHistoryStore?.add(meigen: response.meigen, auther: response.auther)
+                    showBubble(text: "\(response.meigen)\n— \(response.auther)")
                 } else {
                     showIdleBubble()
                 }
