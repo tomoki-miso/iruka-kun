@@ -9,7 +9,7 @@ final class BubbleView: NSView {
     private let tailHeight: CGFloat = 8
     private let collapseThreshold = 20
     private let collapsedMaxWidth: CGFloat = 120
-    private let expandedMaxWidth: CGFloat = 280
+    private var expandedMaxWidth: CGFloat { lastCharacterFrame.width * 1.5 }
 
     private let allowButton = NSButton()
     private let allowAlwaysButton = NSButton()
