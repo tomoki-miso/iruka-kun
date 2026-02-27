@@ -26,6 +26,15 @@ if [ -f "$ALLOW_FILE" ] && grep -qFx "$MAIN_CMD" "$ALLOW_FILE"; then
   exit 0
 fi
 
+# Claude Code の許可設定をチェック: 既に許可済みなら解説をスキップ
+for _SETTINGS in ".claude/settings.local.json" "$HOME/.claude/settings.json"; do
+  if [ -f "$_SETTINGS" ]; then
+    if jq -r '.permissions.allow[]?' "$_SETTINGS" 2>/dev/null | grep -qE "^Bash\(${MAIN_CMD}([^a-zA-Z0-9_-]|$)"; then
+      exit 0
+    fi
+  fi
+done
+
 # tldr(日本語) → tldr(英語) → whatis の順で解説を取得
 EXPLANATION=""
 IS_JAPANESE=false
@@ -49,7 +58,7 @@ fi
 
 # 日本語でなければ claude (Haiku) で翻訳
 if [ "$IS_JAPANESE" = false ] && command -v claude &>/dev/null; then
-  TRANSLATED=$(claude -p --model haiku "以下のコマンド「${MAIN_CMD}」の解説を簡潔な日本語に翻訳してください。箇条書きのフォーマットを保持してください。余計な前置きは不要です。
+  TRANSLATED=$(claude -p --model haiku --no-session-persistence "以下のコマンド「${MAIN_CMD}」の解説を簡潔な日本語に翻訳してください。箇条書きのフォーマットを保持してください。余計な前置きは不要です。
 
 ${EXPLANATION}" 2>/dev/null)
   if [ -n "$TRANSLATED" ]; then
