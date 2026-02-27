@@ -6,16 +6,14 @@ final class WorkTrackerTests: XCTestCase {
     var tracker: WorkTracker!
     var historyStore: WorkHistoryStore!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
         let defaults = UserDefaults(suiteName: "test_\(UUID().uuidString)")!
         historyStore = WorkHistoryStore(defaults: defaults)
         tracker = WorkTracker(historyStore: historyStore, idleThreshold: 2.0)
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         tracker.stop()
-        super.tearDown()
     }
 
     func testInitialStateIsIdle() {
