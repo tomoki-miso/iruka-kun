@@ -56,16 +56,6 @@ if [ -z "$EXPLANATION" ]; then
   exit 0
 fi
 
-# 日本語でなければ claude (Haiku) で翻訳
-if [ "$IS_JAPANESE" = false ] && command -v claude &>/dev/null; then
-  TRANSLATED=$(claude -p --model haiku --no-session-persistence "以下のコマンド「${MAIN_CMD}」の解説を簡潔な日本語に翻訳してください。箇条書きのフォーマットを保持してください。余計な前置きは不要です。
-
-${EXPLANATION}" 2>/dev/null)
-  if [ -n "$TRANSLATED" ]; then
-    EXPLANATION="$TRANSLATED"
-  fi
-fi
-
 # stderr に出力
 INTROS=(
   "このコマンドはね〜"
@@ -82,11 +72,29 @@ echo "────────────────────────�
 echo "$EXPLANATION" >&2
 echo "" >&2
 
-# pending 状態で JSON に書き出し（まだ表示しない）
+# pending 状態で JSON に書き出し（翻訳前に即座に表示させる）
 TIMESTAMP=$(date +%s)$$
 jq -n --arg cmd "$MAIN_CMD" --arg exp "$EXPLANATION" --arg ts "$TIMESTAMP" \
   '{command: $cmd, explanation: $exp, timestamp: $ts, status: "pending"}' \
   > /tmp/iruka-kun-command-explain.json 2>/dev/null
+
+# 日本語でなければバックグラウンドで翻訳し JSON を更新
+if [ "$IS_JAPANESE" = false ] && command -v claude &>/dev/null; then
+  (
+    TRANSLATED=$(claude -p --model haiku --no-session-persistence "以下のコマンド「${MAIN_CMD}」の解説を簡潔な日本語に翻訳してください。箇条書きのフォーマットを保持してください。余計な前置きは不要です。
+
+${EXPLANATION}" 2>/dev/null)
+    if [ -n "$TRANSLATED" ]; then
+      # まだ pending/show 状態なら翻訳結果で更新
+      STATUS=$(jq -r '.status // empty' /tmp/iruka-kun-command-explain.json 2>/dev/null)
+      if [ "$STATUS" = "pending" ] || [ "$STATUS" = "show" ]; then
+        jq -n --arg cmd "$MAIN_CMD" --arg exp "$TRANSLATED" --arg ts "$TIMESTAMP" --arg s "$STATUS" \
+          '{command: $cmd, explanation: $exp, timestamp: $ts, status: $s}' \
+          > /tmp/iruka-kun-command-explain.json 2>/dev/null
+      fi
+    fi
+  ) &
+fi
 
 # レスポンスファイルをポーリングしてイルカくんUIからの許可/拒否を待つ
 RESPONSE_FILE="/tmp/iruka-kun-command-response.json"
