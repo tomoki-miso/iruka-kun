@@ -5,8 +5,7 @@ import XCTest
 final class StateMachineTests: XCTestCase {
     var stateMachine: StateMachine!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
         stateMachine = StateMachine()
     }
 
