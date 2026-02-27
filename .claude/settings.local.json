@@ -33,7 +33,32 @@
       "Bash(sips:*)",
       "Bash(ls:*)",
       "Bash(/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -f \"/Users/misoshiru/Library/Developer/Xcode/DerivedData/IrukaKun-avvjprmdhmkogyhjegjwmsugsxme/Build/Products/Debug/iruka-kun.app\")",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(chmod:*)",
+      "Bash(/Users/misoshiru/Development/iruka-kun/scripts/build-dmg.sh:*)",
+      "Bash(git -C /Users/misoshiru/Development/iruka-kun add scripts/build-dmg.sh docs/plans/2026-02-19-dmg-distribution.md)",
+      "Bash(git -C /Users/misoshiru/Development/iruka-kun commit -m \"$\\(cat <<''EOF''\nfeat: DMG ビルドスクリプトを追加\n\nscripts/build-dmg.sh で XcodeGen → xcodebuild → hdiutil の\nフローを自動化し、build/IrukaKun-{version}.dmg を生成する。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /Users/misoshiru/Development/iruka-kun add Resources/Sprites/ono_idle_0.png Resources/Sprites/syacho_idle_0.png assets/ono.png assets/syacho.png)",
+      "Bash(git -C /Users/misoshiru/Development/iruka-kun commit -m \"$\\(cat <<''EOF''\nassets: ono / syacho キャラクターのスプライト画像を追加\n\nResources/Sprites/ にアプリ用スプライト、assets/ に元画像を追加。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /Users/misoshiru/Development/iruka-kun add IrukaKun.xcodeproj/project.pbxproj IrukaKun/Character/SpriteAnimator.swift IrukaKun/MenuBar/StatusBarController.swift IrukaKun/State/CharacterType.swift)",
+      "Bash(git -C /Users/misoshiru/Development/iruka-kun check-ignore:*)",
+      "Bash(git -C /Users/misoshiru/Development/iruka-kun add:*)",
+      "Bash(git -C /Users/misoshiru/Development/iruka-kun commit -m \"$\\(cat <<''EOF''\nfeat: ono / syacho キャラクターを追加\n\nCharacterType に .ono / .syacho ケースを追加し、\nSpriteAnimator・StatusBarController でのスプライト読み込みと\nステータスラベル表示に対応。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(command -v:*)",
+      "Bash(grep:*)",
+      "Bash(defaults delete:*)",
+      "Bash(bash:*)",
+      "Bash(curl:*)",
+      "Bash(git -C /Users/misoshiru/Development/iruka-kun log --oneline -15)",
+      "Bash(git -C /Users/misoshiru/Development/iruka-kun remote -v)",
+      "WebSearch",
+      "Bash(git -C /Users/misoshiru/Development/iruka-kun log --oneline -20)",
+      "Bash(python3:*)",
+      "Bash(tldr:*)",
+      "Bash(whatis:*)",
+      "Bash(gh run view:*)",
+      "Bash(git push:*)",
+      "Bash(gh run list:*)"
     ]
   }
 }
