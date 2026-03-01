@@ -8,6 +8,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let meigenHistoryWindowController = MeigenHistoryWindowController()
     private let workHistoryStore = WorkHistoryStore()
     private let meigenHistoryStore = MeigenHistoryStore()
+    private var reportWindowController: ReportWindowController?
     private var workTracker: WorkTracker?
     private var characterController: CharacterController?
     private var commandExplainWatcher: CommandExplainWatcher?
@@ -58,6 +59,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarController.onShowMeigenHistory = { [weak self] in
             guard let self else { return }
             self.meigenHistoryWindowController.show(historyStore: self.meigenHistoryStore)
+        }
+        statusBarController.onShowReport = { [weak self] in
+            guard let self else { return }
+            if self.reportWindowController == nil {
+                self.reportWindowController = ReportWindowController(historyStore: self.workHistoryStore)
+            }
+            self.reportWindowController?.show()
         }
         statusBarController.presetsProvider = { [weak self] in
             self?.workHistoryStore.presets ?? []

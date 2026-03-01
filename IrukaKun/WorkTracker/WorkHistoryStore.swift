@@ -45,6 +45,12 @@ final class WorkHistoryStore: Sendable {
         return loadHistory()[dateKey] ?? [:]
     }
 
+
+    func todayBreakdown(for date: Date) -> [String: TimeInterval] {
+        let dateKey = dateFormatter.string(from: date)
+        return loadHistory()[dateKey] ?? [:]
+    }
+
     // MARK: - History
 
     struct DayHistory {

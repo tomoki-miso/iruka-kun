@@ -42,3 +42,5 @@ targets:
         PRODUCT_NAME: "IrukaKunTests"
         BUNDLE_LOADER: "$(TEST_HOST)"
         TEST_HOST: "$(BUILT_PRODUCTS_DIR)/iruka-kun.app/Contents/MacOS/iruka-kun"
+      Release:
+        OTHER_SWIFT_FLAGS: "-enable-testing"

@@ -23,6 +23,7 @@ final class StatusBarController {
     var onAddPreset: ((String) -> Void)?
     var onShowHistory: (() -> Void)?
     var onShowMeigenHistory: (() -> Void)?
+    var onShowReport: (() -> Void)?
 
     var onSwitchCharacter: ((CharacterType) -> Void)?
     var currentCharacterProvider: (() -> CharacterType)?
@@ -171,6 +172,10 @@ final class StatusBarController {
         let meigenHistoryItem = NSMenuItem(title: "名言ヒストリー...", action: #selector(showMeigenHistory), keyEquivalent: "")
         meigenHistoryItem.image = NSImage(systemSymbolName: "quote.bubble", accessibilityDescription: nil)
         menu.addItem(meigenHistoryItem)
+
+        let reportItem = NSMenuItem(title: "レポート...", action: #selector(showReport), keyEquivalent: "r")
+        reportItem.image = NSImage(systemSymbolName: "chart.bar", accessibilityDescription: nil)
+        menu.addItem(reportItem)
 
         let settingsItem = NSMenuItem(title: "設定...", action: #selector(openSettings), keyEquivalent: ",")
         settingsItem.image = NSImage(systemSymbolName: "gearshape", accessibilityDescription: nil)
@@ -353,6 +358,7 @@ final class StatusBarController {
     @objc private func toggleWork() { onToggleWork?() }
     @objc private func showHistory() { onShowHistory?() }
     @objc private func showMeigenHistory() { onShowMeigenHistory?() }
+    @objc private func showReport() { onShowReport?() }
     @objc private func openSettings() { onOpenSettings?() }
     @objc private func quit() { onQuit?() }
 
