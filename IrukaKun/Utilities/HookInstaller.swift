@@ -7,32 +7,45 @@ final class HookInstaller {
 
     private static let scripts: [(resource: String, dest: String)] = [
         ("explain-command", "~/.claude/hooks/explain-command.sh"),
-        ("notify-explain", "~/.claude/hooks/notify-explain.sh"),
         ("dismiss-explain", "~/.claude/hooks/dismiss-explain.sh"),
+    ]
+
+    /// 期待するフック設定。毎回起動時に検証される。
+    private static let expectedHooks: [(phase: String, matcher: String, scriptIndex: Int, timeout: Int)] = [
+        ("PreToolUse", "Bash", 0, 60),
+        ("PostToolUse", "Bash", 1, 5),
     ]
 
     static func installIfNeeded() {
         let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
         let installedVersion = UserDefaults.standard.string(forKey: installedVersionKey)
-
-        guard installedVersion != appVersion else {
-            NSLog("[iruka-kun] HookInstaller: already installed (v\(appVersion))")
-            return
-        }
-
-        NSLog("[iruka-kun] HookInstaller: installing hooks (v\(appVersion))...")
+        let isNewVersion = installedVersion != appVersion
 
         do {
-            try installScripts()
-            try registerHooksInSettings()
-            UserDefaults.standard.set(appVersion, forKey: installedVersionKey)
-            NSLog("[iruka-kun] HookInstaller: install complete")
+            // スクリプトファイル: バージョン更新時 or ファイル欠損時にインストール
+            if isNewVersion || !allScriptsExist() {
+                NSLog("[iruka-kun] HookInstaller: installing scripts (v\(appVersion))...")
+                try installScripts()
+                try cleanupOldScripts()
+                UserDefaults.standard.set(appVersion, forKey: installedVersionKey)
+            }
+
+            // settings.json: 毎回起動時に検証・修正
+            try ensureHooksRegistered()
         } catch {
             NSLog("[iruka-kun] HookInstaller: install failed — \(error)")
         }
     }
 
     // MARK: - Script Install
+
+    private static func allScriptsExist() -> Bool {
+        let fm = FileManager.default
+        return scripts.allSatisfy { script in
+            let path = NSString(string: script.dest).expandingTildeInPath
+            return fm.fileExists(atPath: path)
+        }
+    }
 
     private static func installScripts() throws {
         let fm = FileManager.default
@@ -49,9 +62,20 @@ final class HookInstaller {
         }
     }
 
-    // MARK: - Settings Registration
+    // MARK: - Cleanup Old Scripts
 
-    private static func registerHooksInSettings() throws {
+    private static func cleanupOldScripts() throws {
+        let fm = FileManager.default
+        let oldScript = NSString(string: "~/.claude/hooks/notify-explain.sh").expandingTildeInPath
+        if fm.fileExists(atPath: oldScript) {
+            try fm.removeItem(atPath: oldScript)
+            NSLog("[iruka-kun] HookInstaller: removed old notify-explain.sh")
+        }
+    }
+
+    // MARK: - Settings Registration (毎回検証)
+
+    private static func ensureHooksRegistered() throws {
         let expandedPath = NSString(string: settingsPath).expandingTildeInPath
         let settingsURL = URL(fileURLWithPath: expandedPath)
         let fm = FileManager.default
@@ -67,40 +91,50 @@ final class HookInstaller {
 
         var hooks = settings["hooks"] as? [String: Any] ?? [:]
 
-        // PreToolUse: explain-command.sh
-        let preCommand = NSString(string: scripts[0].dest).expandingTildeInPath
-        registerHook(
-            in: &hooks,
-            phase: "PreToolUse",
-            matcher: "Bash",
-            command: preCommand,
-            timeout: 60
-        )
+        // 古い Notification フックを削除
+        cleanupOldHooks(in: &hooks)
 
-        // Notification: notify-explain.sh
-        let notifyCommand = NSString(string: scripts[1].dest).expandingTildeInPath
-        registerHook(
-            in: &hooks,
-            phase: "Notification",
-            matcher: "",
-            command: notifyCommand,
-            timeout: 5
-        )
+        // 期待するフックがすべて登録されているか検証
+        var needsWrite = false
 
-        // PostToolUse: dismiss-explain.sh
-        let postCommand = NSString(string: scripts[2].dest).expandingTildeInPath
-        registerHook(
-            in: &hooks,
-            phase: "PostToolUse",
-            matcher: "Bash",
-            command: postCommand,
-            timeout: 5
-        )
+        for expected in expectedHooks {
+            let command = NSString(string: scripts[expected.scriptIndex].dest).expandingTildeInPath
+            if !isHookRegistered(in: hooks, phase: expected.phase, matcher: expected.matcher, command: command) {
+                registerHook(in: &hooks, phase: expected.phase, matcher: expected.matcher, command: command, timeout: expected.timeout)
+                needsWrite = true
+                NSLog("[iruka-kun] HookInstaller: registered \(expected.phase) hook for \(expected.matcher)")
+            }
+        }
 
-        settings["hooks"] = hooks
+        if needsWrite {
+            settings["hooks"] = hooks
+            let jsonData = try JSONSerialization.data(withJSONObject: settings, options: [.prettyPrinted, .sortedKeys])
+            try jsonData.write(to: settingsURL)
+            NSLog("[iruka-kun] HookInstaller: settings.json updated")
+        }
+    }
 
-        let jsonData = try JSONSerialization.data(withJSONObject: settings, options: [.prettyPrinted, .sortedKeys])
-        try jsonData.write(to: settingsURL)
+    private static func cleanupOldHooks(in hooks: inout [String: Any]) {
+        if var notificationHooks = hooks["Notification"] as? [[String: Any]] {
+            notificationHooks.removeAll { entry in
+                guard let entryHooks = entry["hooks"] as? [[String: Any]] else { return false }
+                return entryHooks.allSatisfy { hook in
+                    (hook["command"] as? String)?.contains("notify-explain") == true
+                }
+            }
+            if notificationHooks.isEmpty {
+                hooks.removeValue(forKey: "Notification")
+            } else {
+                hooks["Notification"] = notificationHooks
+            }
+        }
+    }
+
+    private static func isHookRegistered(in hooks: [String: Any], phase: String, matcher: String, command: String) -> Bool {
+        guard let phaseHooks = hooks[phase] as? [[String: Any]] else { return false }
+        guard let entry = phaseHooks.first(where: { ($0["matcher"] as? String) == matcher }) else { return false }
+        guard let entryHooks = entry["hooks"] as? [[String: Any]] else { return false }
+        return entryHooks.contains { ($0["command"] as? String) == command }
     }
 
     private static func registerHook(in hooks: inout [String: Any], phase: String, matcher: String, command: String, timeout: Int) {
@@ -115,12 +149,9 @@ final class HookInstaller {
         if let idx = phaseHooks.firstIndex(where: { ($0["matcher"] as? String) == matcher }) {
             var entry = phaseHooks[idx]
             var entryHooks = entry["hooks"] as? [[String: Any]] ?? []
-            let alreadyRegistered = entryHooks.contains { ($0["command"] as? String) == command }
-            if !alreadyRegistered {
-                entryHooks.append(hookEntry)
-                entry["hooks"] = entryHooks
-                phaseHooks[idx] = entry
-            }
+            entryHooks.append(hookEntry)
+            entry["hooks"] = entryHooks
+            phaseHooks[idx] = entry
         } else {
             phaseHooks.append([
                 "matcher": matcher,

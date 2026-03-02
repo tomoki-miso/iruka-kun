@@ -4,7 +4,6 @@ final class CommandExplainWatcher: @unchecked Sendable {
     private let filePath = "/tmp/iruka-kun-command-explain.json"
     private let queue = DispatchQueue(label: "com.iruka-kun.command-explain-watcher")
     private var source: DispatchSourceFileSystemObject?
-    private var pendingTimer: DispatchWorkItem?
 
     private let responsePath = "/tmp/iruka-kun-command-response.json"
 
@@ -25,7 +24,6 @@ final class CommandExplainWatcher: @unchecked Sendable {
     func stop() {
         source?.cancel()
         source = nil
-        pendingTimer?.cancel()
     }
 
     private func createSource() {
@@ -80,36 +78,14 @@ final class CommandExplainWatcher: @unchecked Sendable {
         let status = json["status"] as? String ?? ""
 
         switch status {
-        case "pending":
-            // 500ms 後もまだ pending なら許可要求中と判断して表示
-            pendingTimer?.cancel()
-            let work = DispatchWorkItem { [weak self] in
-                self?.checkAndShow(path: path)
-            }
-            pendingTimer = work
-            queue.asyncAfter(deadline: .now() + 0.5, execute: work)
         case "show":
-            pendingTimer?.cancel()
             showExplanation(from: json)
         case "dismiss":
-            pendingTimer?.cancel()
             Task { @MainActor [weak self] in
                 self?.onCommandDismiss?()
             }
         default:
             break
-        }
-    }
-
-    private func checkAndShow(path: String) {
-        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
-              !data.isEmpty,
-              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-            return
-        }
-        let status = json["status"] as? String ?? ""
-        if status == "pending" || status == "show" {
-            showExplanation(from: json)
         }
     }
 

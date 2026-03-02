@@ -13,7 +13,6 @@
 		252EBF1FD0CDECB9D184F86F /* WorkTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCACEF3CAAB55150BCB5B2B /* WorkTracker.swift */; };
 		2C46C5E7A204819D4541650D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0988347F8D32103C493941 /* AppDelegate.swift */; };
 		32061AA0975F4889B5FA7925 /* CharacterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0365A0E37337C360207D1E14 /* CharacterType.swift */; };
-		33DB9765B0B59DAED1F5C402 /* notify-explain.sh in Resources */ = {isa = PBXBuildFile; fileRef = EF0289208FD35CEC7C90873F /* notify-explain.sh */; };
 		3B407FCD4C01FEF258AC56CD /* MeigenHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71EF634CF432B8AAB1874C6 /* MeigenHistoryStore.swift */; };
 		4037CEA7E9A7CE3A8C6AAB1F /* PositionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971EEBE20FB8A2A2E42A5556 /* PositionStoreTests.swift */; };
 		4724AF59053BDA9345083F12 /* IrukaKunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DDC50FC7524C15CBB70D6B /* IrukaKunTests.swift */; };
@@ -121,7 +120,6 @@
 		E573B33DC52590F0C535395A /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
 		E9B2827AD80FA08E36E28B4B /* CharacterStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterStore.swift; sourceTree = "<group>"; };
 		E9C2081707D363ED42C3D162 /* HookInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HookInstaller.swift; sourceTree = "<group>"; };
-		EF0289208FD35CEC7C90873F /* notify-explain.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "notify-explain.sh"; sourceTree = "<group>"; };
 		F14D62A0785D70E6D52AA533 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F4A7AADBB819063D9DD01854 /* ReportGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportGeneratorTests.swift; sourceTree = "<group>"; };
 		FD51F7CBD6344C6BDCD768D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -268,7 +266,6 @@
 				6A663F7C23BC562FD0778DAE /* Dialogues.json */,
 				7D4740DCEA7A58C070A0301F /* dismiss-explain.sh */,
 				087B9140DBA80637B01BA8F2 /* explain-command.sh */,
-				EF0289208FD35CEC7C90873F /* notify-explain.sh */,
 				81EE7F87EB2A8B8DF43A4223 /* Sprites */,
 			);
 			path = Resources;
@@ -362,7 +359,6 @@
 				20023B197F908C8E09A2A914 /* dismiss-explain.sh in Resources */,
 				20A1F1D7E75CECAE9892EB1E /* explain-command.sh in Resources */,
 				D31E02632534DB809FA3740D /* iruka_idle_0.png in Resources */,
-				33DB9765B0B59DAED1F5C402 /* notify-explain.sh in Resources */,
 				CC5BDA5FF0E75A30E7DD485A /* ono_idle_0.png in Resources */,
 				B9536167A58AA655E84E1FCF /* rakko_idle_0.png in Resources */,
 				DD2DEC551D4631D36F73EE8C /* syacho_idle_0.png in Resources */,
