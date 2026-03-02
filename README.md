@@ -111,14 +111,16 @@ xcodebuild -scheme IrukaKun -configuration Debug build
 xcodebuild test -scheme IrukaKun
 ```
 
-### Test Coverage (v0.1.0)
-- Total: 46/46 tests passing
+### Test Coverage (v0.2.0)
+- Total: 58/58 tests passing
 - State Machine: 11 tests
 - Dialogue System: 7 tests
 - Sprite Animation: 8 tests
 - Work Tracking: 12 tests
+- Work History: 11 tests
+- Report Generator: 12 tests
 - Character Management: 5 tests
-- Utilities: 3 tests
+- Position Store: 2 tests
 
 ### Code Guidelines
 - **Naming**: PascalCase (classes), camelCase (functions)
