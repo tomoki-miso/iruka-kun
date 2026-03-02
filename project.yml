@@ -29,6 +29,8 @@ targets:
         CODE_SIGN_ENTITLEMENTS: IrukaKun/iruka-kun.entitlements
         PRODUCT_MODULE_NAME: IrukaKun
         LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks"
+      Release:
+        OTHER_SWIFT_FLAGS: "-enable-testing"
   IrukaKunTests:
     type: bundle.unit-test
     platform: macOS
