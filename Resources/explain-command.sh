@@ -13,11 +13,15 @@ MAIN_CMD=$(echo "$COMMAND" | sed 's/^[A-Z_]*=[^ ]* //; s/^sudo //' | awk '{print
 [ -z "$MAIN_CMD" ] && exit 0
 
 # Claude Code の許可設定をチェック: 既に許可済みなら解説をスキップ
-for _SETTINGS in ".claude/settings.local.json" "$HOME/.claude/settings.json"; do
-  if [ -f "$_SETTINGS" ]; then
-    if jq -r '.permissions.allow[]?' "$_SETTINGS" 2>/dev/null | grep -qE "^Bash\(${MAIN_CMD}([^a-zA-Z0-9_-]|$)"; then
-      exit 0
-    fi
+_PROJECT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
+for _SETTINGS in \
+  "${_PROJECT_ROOT:+$_PROJECT_ROOT/.claude/settings.local.json}" \
+  ".claude/settings.local.json" \
+  "$HOME/.claude/settings.json"; do
+  [ -z "$_SETTINGS" ] && continue
+  [ -f "$_SETTINGS" ] || continue
+  if jq -r '.permissions.allow[]?' "$_SETTINGS" 2>/dev/null | grep -qE "^Bash\(${MAIN_CMD}([^a-zA-Z0-9_-]|$)"; then
+    exit 0
   fi
 done
 

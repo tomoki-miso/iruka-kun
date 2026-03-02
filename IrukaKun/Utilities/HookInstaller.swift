@@ -23,7 +23,7 @@ final class HookInstaller {
 
         do {
             // スクリプトファイル: バージョン更新時 or ファイル欠損時にインストール
-            if isNewVersion || !allScriptsExist() {
+            if isNewVersion || !allScriptsExist() || !allScriptsUpToDate() {
                 NSLog("[iruka-kun] HookInstaller: installing scripts (v\(appVersion))...")
                 try installScripts()
                 try cleanupOldScripts()
@@ -44,6 +44,16 @@ final class HookInstaller {
         return scripts.allSatisfy { script in
             let path = NSString(string: script.dest).expandingTildeInPath
             return fm.fileExists(atPath: path)
+        }
+    }
+
+    private static func allScriptsUpToDate() -> Bool {
+        scripts.allSatisfy { script in
+            guard let sourceURL = Bundle.main.url(forResource: script.resource, withExtension: "sh"),
+                  let sourceData = try? Data(contentsOf: sourceURL) else { return false }
+            let destPath = NSString(string: script.dest).expandingTildeInPath
+            guard let destData = try? Data(contentsOf: URL(fileURLWithPath: destPath)) else { return false }
+            return sourceData == destData
         }
     }
 
