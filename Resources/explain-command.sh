@@ -21,14 +21,45 @@ for _SETTINGS in ".claude/settings.local.json" "$HOME/.claude/settings.json"; do
   fi
 done
 
-# tldr(日本語) → tldr(英語) → whatis の順で解説を取得
+# フォールバックチェーン: 日本語tldrページ直接読み → 英語tldr → whatis
+TLDR_BASE="${HOME}/.tldrc/tldr"
 EXPLANATION=""
-if command -v tldr &>/dev/null; then
-  EXPLANATION=$(tldr -L ja "$MAIN_CMD" 2>/dev/null | head -10)
-  [ -z "$EXPLANATION" ] && EXPLANATION=$(tldr "$MAIN_CMD" 2>/dev/null | head -10)
+
+# 1. 日本語 tldr ページを直接読み込み (osx 優先、次に common)
+if [ -d "$TLDR_BASE/pages.ja" ]; then
+  for _DIR in osx common linux; do
+    _PAGE="$TLDR_BASE/pages.ja/$_DIR/${MAIN_CMD}.md"
+    if [ -f "$_PAGE" ]; then
+      EXPLANATION=$(head -20 "$_PAGE")
+      break
+    fi
+  done
 fi
+
+# 2. 英語 tldr (コマンド経由 -- pages.ja にない場合)
+if [ -z "$EXPLANATION" ]; then
+  if command -v tldr &>/dev/null; then
+    EXPLANATION=$(tldr "$MAIN_CMD" 2>/dev/null | head -10)
+  fi
+fi
+
+# 3. whatis (最終フォールバック)
 [ -z "$EXPLANATION" ] && EXPLANATION=$(whatis "$MAIN_CMD" 2>/dev/null | head -3)
 [ -z "$EXPLANATION" ] && exit 0
+
+# tldr ページの定期更新（週1回、バックグラウンド）
+if command -v tldr &>/dev/null; then
+  TLDR_UPDATE_MARKER="/tmp/iruka-kun-tldr-last-update"
+  _NEED_UPDATE=false
+  if [ ! -f "$TLDR_UPDATE_MARKER" ]; then
+    _NEED_UPDATE=true
+  else
+    _LAST_UPDATE=$(stat -f %m "$TLDR_UPDATE_MARKER" 2>/dev/null || echo 0)
+    _NOW=$(date +%s)
+    [ $((_NOW - _LAST_UPDATE)) -gt $((7*24*60*60)) ] && _NEED_UPDATE=true
+  fi
+  [ "$_NEED_UPDATE" = true ] && (tldr --update &>/dev/null && touch "$TLDR_UPDATE_MARKER") &
+fi
 
 # stderr に出力（ターミナルへの即時フィードバック）
 INTROS=(

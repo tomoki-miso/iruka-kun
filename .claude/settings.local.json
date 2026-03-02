@@ -58,7 +58,8 @@
       "Bash(whatis:*)",
       "Bash(gh run view:*)",
       "Bash(git push:*)",
-      "Bash(gh run list:*)"
+      "Bash(gh run list:*)",
+      "Bash(jq:*)"
     ]
   }
 }
