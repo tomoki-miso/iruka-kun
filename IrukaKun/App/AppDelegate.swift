@@ -132,16 +132,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         watcher.start()
-
-        characterController?.onAllowCommand = { [weak self] in
-            self?.commandExplainWatcher?.respond(decision: "allow")
-        }
-        characterController?.onAllowAlwaysCommand = { [weak self] in
-            self?.commandExplainWatcher?.respond(decision: "allowAlways")
-        }
-        characterController?.onDenyCommand = { [weak self] in
-            self?.commandExplainWatcher?.respond(decision: "deny")
-        }
         commandExplainWatcher = watcher
     }
 

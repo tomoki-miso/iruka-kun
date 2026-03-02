@@ -11,10 +11,6 @@ final class BubbleView: NSView {
     private let collapsedMaxWidth: CGFloat = 120
     private var expandedMaxWidth: CGFloat { lastCharacterFrame.width * 1.5 }
 
-    private let allowButton = NSButton()
-    private let allowAlwaysButton = NSButton()
-    private let denyButton = NSButton()
-
     private var hoverCheckTimer: Timer?
     private var bubbleWindow: NSWindow?
     private var fullText = ""
@@ -24,9 +20,6 @@ final class BubbleView: NSView {
     private var isCopyable = false
 
     var onDismissCopyMode: (() -> Void)?
-    var onAllowCommand: (() -> Void)?
-    var onAllowAlwaysCommand: (() -> Void)?
-    var onDenyCommand: (() -> Void)?
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -64,30 +57,7 @@ final class BubbleView: NSView {
         closeButton.isHidden = true
         addSubview(closeButton)
 
-        allowButton.bezelStyle = .inline
-        allowButton.title = "✅ 許可"
-        allowButton.font = NSFont.systemFont(ofSize: 11)
-        allowButton.target = self
-        allowButton.action = #selector(allowCommand)
-        allowButton.isHidden = true
-        addSubview(allowButton)
-
-        allowAlwaysButton.bezelStyle = .inline
-        allowAlwaysButton.title = "✅ ずっと許可"
-        allowAlwaysButton.font = NSFont.systemFont(ofSize: 11)
-        allowAlwaysButton.target = self
-        allowAlwaysButton.action = #selector(allowAlwaysCommand)
-        allowAlwaysButton.isHidden = true
-        addSubview(allowAlwaysButton)
-
-        denyButton.bezelStyle = .inline
-        denyButton.title = "❌ 拒否"
-        denyButton.font = NSFont.systemFont(ofSize: 11)
-        denyButton.target = self
-        denyButton.action = #selector(denyCommand)
-        denyButton.isHidden = true
-        addSubview(denyButton)
-    }
+}
 
     func show(text: String, copyable: Bool = false, relativeTo characterFrame: NSRect, in parentWindow: NSWindow) {
         hoverCheckTimer?.invalidate()
@@ -156,18 +126,6 @@ final class BubbleView: NSView {
 
     @objc private func dismissCopyMode() {
         onDismissCopyMode?()
-    }
-
-    @objc private func allowCommand() {
-        onAllowCommand?()
-    }
-
-    @objc private func allowAlwaysCommand() {
-        onAllowAlwaysCommand?()
-    }
-
-    @objc private func denyCommand() {
-        onDenyCommand?()
     }
 
     // MARK: - Label & Layout
@@ -300,7 +258,7 @@ final class BubbleView: NSView {
 
     private func layoutBubble(parentWindow: NSWindow) {
         let showActions = isCopyable
-        let actionsHeight: CGFloat = showActions ? 52 : 0
+        let actionsHeight: CGFloat = showActions ? 26 : 0
 
         let bubbleWidth = label.frame.width + padding * 2
         let bubbleHeight = label.frame.height + padding * 2 + tailHeight + actionsHeight
@@ -327,62 +285,19 @@ final class BubbleView: NSView {
                 height: 18
             )
 
-            // Action buttons: 2 rows
-            // Row 1 (upper): [✅ 許可] [✅ ずっと許可] [❌ 拒否]
-            // Row 2 (lower): [📋 コピー]
+            // Copy button
             copyButton.isHidden = false
-            allowButton.isHidden = false
-            allowAlwaysButton.isHidden = false
-            denyButton.isHidden = false
             copyButton.sizeToFit()
-            allowButton.sizeToFit()
-            allowAlwaysButton.sizeToFit()
-            denyButton.sizeToFit()
-
-            let row1Y = tailHeight + 26
-            let row2Y = tailHeight + 4
-
-            // Row 1: Allow / AlwaysAllow / Deny
-            let allowWidth = allowButton.frame.width + 12
-            let alwaysWidth = allowAlwaysButton.frame.width + 12
-            let denyWidth = denyButton.frame.width + 12
-            let spacing: CGFloat = 4
-            let row1Width = allowWidth + spacing + alwaysWidth + spacing + denyWidth
-            let row1X = (size.width - row1Width) / 2
-
-            allowButton.frame = NSRect(
-                x: row1X,
-                y: row1Y,
-                width: allowWidth,
-                height: 22
-            )
-            allowAlwaysButton.frame = NSRect(
-                x: row1X + allowWidth + spacing,
-                y: row1Y,
-                width: alwaysWidth,
-                height: 22
-            )
-            denyButton.frame = NSRect(
-                x: row1X + allowWidth + spacing + alwaysWidth + spacing,
-                y: row1Y,
-                width: denyWidth,
-                height: 22
-            )
-
-            // Row 2: Copy
             let copyWidth = copyButton.frame.width + 8
             copyButton.frame = NSRect(
                 x: (size.width - copyWidth) / 2,
-                y: row2Y,
+                y: tailHeight + 4,
                 width: copyWidth,
                 height: 22
             )
         } else {
             copyButton.isHidden = true
             closeButton.isHidden = true
-            allowButton.isHidden = true
-            allowAlwaysButton.isHidden = true
-            denyButton.isHidden = true
         }
 
         guard let window = bubbleWindow else { return }

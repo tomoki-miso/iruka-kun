@@ -5,17 +5,8 @@ final class CommandExplainWatcher: @unchecked Sendable {
     private let queue = DispatchQueue(label: "com.iruka-kun.command-explain-watcher")
     private var source: DispatchSourceFileSystemObject?
 
-    private let responsePath = "/tmp/iruka-kun-command-response.json"
-
     var onCommandExplain: ((String, String) -> Void)?
     var onCommandDismiss: (() -> Void)?
-
-    func respond(decision: String) {
-        let json: [String: String] = ["decision": decision]
-        if let data = try? JSONSerialization.data(withJSONObject: json) {
-            try? data.write(to: URL(fileURLWithPath: responsePath))
-        }
-    }
 
     func start() {
         createSource()

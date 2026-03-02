@@ -42,10 +42,6 @@ final class CharacterController {
     var currentState: CharacterState { stateMachine.currentState }
     var onStateChanged: ((CharacterState) -> Void)?
     var onCharacterChanged: ((CharacterType) -> Void)?
-    var onAllowCommand: (() -> Void)?
-    var onAllowAlwaysCommand: (() -> Void)?
-    var onDenyCommand: (() -> Void)?
-
     init() {
         characterView = CharacterView(frame: NSRect(origin: .zero, size: CharacterWindow.characterSize))
         characterWindow.contentView = characterView
@@ -61,19 +57,6 @@ final class CharacterController {
         workTimerOverlay.attach(to: characterWindow)
 
         bubbleView.onDismissCopyMode = { [weak self] in
-            self?.onDenyCommand?()
-            self?.dismissCommandExplanation()
-        }
-        bubbleView.onAllowCommand = { [weak self] in
-            self?.onAllowCommand?()
-            self?.dismissCommandExplanation()
-        }
-        bubbleView.onAllowAlwaysCommand = { [weak self] in
-            self?.onAllowAlwaysCommand?()
-            self?.dismissCommandExplanation()
-        }
-        bubbleView.onDenyCommand = { [weak self] in
-            self?.onDenyCommand?()
             self?.dismissCommandExplanation()
         }
         startFloating()
