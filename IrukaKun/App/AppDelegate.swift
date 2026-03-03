@@ -16,6 +16,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSLog("[iruka-kun] applicationDidFinishLaunching called")
         HookInstaller.installIfNeeded()
+        
+        // Initialize audio system
+        let audioEnabled = UserDefaults.standard.object(forKey: "audioEnabled") as? Bool ?? true
+        if audioEnabled {
+            AudioManager.shared.playBackgroundMusic()
+        }
+        
         characterController = CharacterController()
         characterController?.meigenHistoryStore = meigenHistoryStore
         characterController?.showCharacter()
@@ -30,6 +37,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ notification: Notification) {
         workTracker?.stop()
         commandExplainWatcher?.stop()
+        AudioManager.shared.stopBackgroundMusic()
     }
 
     private func setupMenuBar() {

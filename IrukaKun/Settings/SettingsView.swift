@@ -10,6 +10,9 @@ struct SettingsView: View {
     @State private var enableAnimations: Bool = {
         UserDefaults.standard.object(forKey: "enableAnimations") as? Bool ?? true
     }()
+    @State private var enableAudio: Bool = {
+        UserDefaults.standard.object(forKey: "audioEnabled") as? Bool ?? true
+    }()
 
     var body: some View {
         Form {
@@ -53,10 +56,16 @@ struct SettingsView: View {
                     .onChange(of: enableAnimations) { _, newValue in
                         UserDefaults.standard.set(newValue, forKey: "enableAnimations")
                     }
+                
+                Toggle("効果音と背景音楽", isOn: $enableAudio)
+                    .onChange(of: enableAudio) { _, newValue in
+                        UserDefaults.standard.set(newValue, forKey: "audioEnabled")
+                        AudioManager.shared.setAudioEnabled(newValue)
+                    }
             }
         }
         .formStyle(.grouped)
-        .frame(width: 350, height: 280)
+        .frame(width: 350, height: 330)
         .padding()
     }
 }
