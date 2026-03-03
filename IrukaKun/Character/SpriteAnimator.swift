@@ -75,6 +75,8 @@ final class SpriteAnimator {
         onFrameChanged?(currentFrames[0])
 
         guard currentFrames.count > 1 else { return }
+        let animationEnabled = UserDefaults.standard.object(forKey: "enableAnimations") as? Bool ?? true
+        guard animationEnabled else { return }
         timer = Timer.scheduledTimer(withTimeInterval: 1.0 / fps, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 self?.advanceFrame()

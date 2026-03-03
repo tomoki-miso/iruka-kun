@@ -23,9 +23,14 @@ final class WorkTracker {
     private var lastActivityDate: Date?
     private var eventMonitor: Any?
 
-    init(historyStore: WorkHistoryStore, idleThreshold: TimeInterval = 300) {
+    init(historyStore: WorkHistoryStore, idleThreshold: TimeInterval? = nil) {
         self.historyStore = historyStore
-        self.idleThreshold = idleThreshold
+        if let threshold = idleThreshold {
+            self.idleThreshold = threshold
+        } else {
+            let seconds = UserDefaults.standard.integer(forKey: "idleThresholdSeconds")
+            self.idleThreshold = seconds > 0 ? TimeInterval(seconds) : 300
+        }
     }
 
     var todayTotal: TimeInterval {
