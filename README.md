@@ -111,7 +111,7 @@ xcodebuild -scheme IrukaKun -configuration Debug build
 xcodebuild test -scheme IrukaKun
 ```
 
-### Test Coverage (v0.2.0)
+### Test Coverage (v0.3.0)
 - Total: 58/58 tests passing
 - State Machine: 11 tests
 - Dialogue System: 7 tests
@@ -183,12 +183,39 @@ defaults delete com.misoshiru.iruka-kun window_position_y
 - Sprite animation: 1×N or N×1 grids only
 - Dialogue: Random selection (not AI)
 - Work history: Local storage only
-- No settings UI
 - Menu icon: OS-fixed size
 
+### v0.2.0 (2026-03-02) — Reports & Analytics
+**Features:**
+- Daily work breakdown by category
+- Weekly, monthly, and date-range reports
+- Category-wise time analytics
+- Report window with tab-based navigation
+- Statistics and summaries
+
+**Test Coverage:** 58/58 tests (100%)
+
+**Improvements:**
+- ReportGenerator: Daily/Weekly/Monthly/Range report generation
+- ReportView: SwiftUI-based report UI with date picker
+- Enhanced work history analytics
+
+### v0.3.0 (2026-03-03) — Settings & Configuration
+**Features:**
+- Customizable idle threshold (1-30 minutes, default 5 minutes)
+- Character animation toggle (enable/disable)
+- Settings UI with grouped sections
+- UserDefaults persistence
+- Backward compatible defaults
+
+**Test Coverage:** 58/58 tests (100%)
+
+**Technical Details:**
+- UserDefaults keys: `idleThresholdSeconds`, `enableAnimations`
+- Settings window with 3 sections: Application, Work Tracking, Display
+- Dynamic animation control via SpriteAnimator
+
 **Future Roadmap:**
-- v0.2.0: Settings UI
-- v0.3.0: Export & calendar
 - v0.4.0: Audio & music
 - v0.5.0: Multi-monitor
 - v1.0.0: Cloud sync
@@ -229,4 +256,4 @@ MIT License — See LICENSE file
 
 **Made with ❤️ by misoshiru**
 
-Current Version: 0.1.0
+Current Version: 0.3.0
