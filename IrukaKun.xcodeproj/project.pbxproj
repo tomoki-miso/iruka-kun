@@ -22,6 +22,7 @@
 		504426B00013376E2B1A108C /* PositionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C27A7D980FA4FE1777F82F7 /* PositionStore.swift */; };
 		528722FD1BED7E816DCA91F7 /* CharacterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037A549C9EC3C3BEDD61E0AA /* CharacterState.swift */; };
 		625DFC31E779E9341A906971 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1D2071564CB99F5362AE80 /* SoundPlayer.swift */; };
+		07D9D188BEA4FA2124BFE687 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D74648E9BF4BC68CBBFC3F4 /* AudioManager.swift */; };
 		64D8916F761408CDD123EB3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD51F7CBD6344C6BDCD768D6 /* Assets.xcassets */; };
 		73005BED8B32F125A94EBAC4 /* HookInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2081707D363ED42C3D162 /* HookInstaller.swift */; };
 		7328DFA70FD5C6AC229CA2E2 /* WorkTimerOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C561C962AA2F39E5309AAC48 /* WorkTimerOverlay.swift */; };
@@ -87,6 +88,7 @@
 		2063FCD01D68549A4D6F0BFF /* CharacterWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterWindow.swift; sourceTree = "<group>"; };
 		28413A08DF8736F3A32D445B /* MeigenHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeigenHistoryView.swift; sourceTree = "<group>"; };
 		2A1D2071564CB99F5362AE80 /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
+		7D74648E9BF4BC68CBBFC3F4 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		3566C17FA493A4681918F5C7 /* StateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
 		3738E61381E45DEA0F7402BD /* TimeOfDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOfDay.swift; sourceTree = "<group>"; };
 		3AC849DD357FF0467CBC56B1 /* WorkHistoryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHistoryWindowController.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				4C27A7D980FA4FE1777F82F7 /* PositionStore.swift */,
 				135268895097DF67B90C4998 /* ScreenUtility.swift */,
 				2A1D2071564CB99F5362AE80 /* SoundPlayer.swift */,
+				7D74648E9BF4BC68CBBFC3F4 /* AudioManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				BC2901D7CC29293DD5CFA628 /* SettingsView.swift in Sources */,
 				4945AC894695FA38B82D85AD /* SettingsWindowController.swift in Sources */,
 				625DFC31E779E9341A906971 /* SoundPlayer.swift in Sources */,
+				07D9D188BEA4FA2124BFE687 /* AudioManager.swift in Sources */,
 				7BDE90435C4A698862D78294 /* SpriteAnimator.swift in Sources */,
 				8D2C7AB9CB2BB85296A10DAE /* StateMachine.swift in Sources */,
 				78B482846A31DA699329E707 /* StatusBarController.swift in Sources */,
