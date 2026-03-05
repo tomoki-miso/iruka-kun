@@ -200,7 +200,24 @@ defaults delete com.misoshiru.iruka-kun window_position_y
 - ReportView: SwiftUI-based report UI with date picker
 - Enhanced work history analytics
 
-### v0.3.0 (2026-03-03) — Settings & Configuration
+
+### v0.4.0 (2026-03-06) — Audio & Music
+**Features:**
+- Background music playback with looping
+- Sound effects system with automatic cleanup
+- Audio enable/disable toggle in Settings
+- UserDefaults persistence
+- Graceful handling of missing audio files
+
+**Test Coverage:** 58/58 tests (100%)
+
+**Technical Details:**
+- AudioManager singleton for centralized audio management
+- AVFoundation integration with @MainActor concurrency
+- SoundPlayer delegation wrapper
+- Persistent audio preferences via UserDefaults
+
+
 **Features:**
 - Customizable idle threshold (1-30 minutes, default 5 minutes)
 - Character animation toggle (enable/disable)
@@ -216,7 +233,6 @@ defaults delete com.misoshiru.iruka-kun window_position_y
 - Dynamic animation control via SpriteAnimator
 
 **Future Roadmap:**
-- v0.4.0: Audio & music
 - v0.5.0: Multi-monitor
 - v1.0.0: Cloud sync
 
@@ -256,4 +272,4 @@ MIT License — See LICENSE file
 
 **Made with ❤️ by misoshiru**
 
-Current Version: 0.3.0
+Current Version: 0.4.0
