@@ -32,6 +32,11 @@ final class ScreenUtility {
         return screen?.visibleFrame ?? (NSScreen.main?.visibleFrame ?? .zero)
     }
 
+    static func generateScreenIdentifier(for screen: NSScreen) -> String {
+        let frame = screen.frame
+        return "screen_\(Int(frame.width))x\(Int(frame.height))_\(Int(frame.minX))_\(Int(frame.minY))"
+    }
+
     private static func distance(from point: CGPoint, to rect: NSRect) -> CGFloat {
         let cx = max(rect.minX, min(point.x, rect.maxX))
         let cy = max(rect.minY, min(point.y, rect.maxY))

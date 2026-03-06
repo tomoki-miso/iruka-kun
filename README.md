@@ -236,6 +236,23 @@ defaults delete com.misoshiru.iruka-kun window_position_y
 - v0.5.0: Multi-monitor
 - v1.0.0: Cloud sync
 
+
+### v0.5.0 (2026-03-06) — Multi-Monitor Support
+
+**Features:**
+- Independent window position per display
+- Automatic screen-safe position restoration
+- Legacy position format migration
+- Screen configuration change handling
+
+**Test Coverage:** 70/70 tests (100%)
+
+**Technical Details:**
+- Screen identification via frame geometry (format: "screen_<width>x<height>_<x>_<y>")
+- Per-screen UserDefaults storage (`iruka_screen_positions`)
+- Backward compatible with v0.4.0 legacy position format
+- Auto-migration on first launch in multi-monitor environment
+
 ## Contributing
 
 1. Fork repository
@@ -272,4 +289,4 @@ MIT License — See LICENSE file
 
 **Made with ❤️ by misoshiru**
 
-Current Version: 0.4.0
+Current Version: 0.5.0

@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-03-06
+
+### Added
+- **Multi-Monitor Support**
+  - Independent window position per display
+  - Screen configuration change detection
+  - Automatic position migration
+  - Safe position restoration after screen removal
+
+### Changed
+- PositionStore now tracks screen-specific positions
+- CharacterWindow position restoration improved for multi-display environments
+
+### Technical
+- ScreenUtility.generateScreenIdentifier() for unique screen identification
+- UserDefaults schema: `iruka_screen_positions` (dict of screen IDs to positions)
+- Backward compatible migration from legacy single-position format
+
+### Test Coverage
+- Added 4 new tests for screen-specific position storage
+- Total: 70/70 tests (100% pass rate)
+
 ## [0.2.0] - 2026-03-02
 
 ### Added

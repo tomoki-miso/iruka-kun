@@ -33,12 +33,21 @@ final class CharacterWindow: NSWindow {
     override var canBecomeKey: Bool { true }
 
     func savePosition() {
-        positionStore.save(position: frame.origin)
+        let currentScreen = NSScreen.main ?? NSScreen.screens[0]
+        let screenId = ScreenUtility.generateScreenIdentifier(for: currentScreen)
+        positionStore.save(position: frame.origin, for: screenId)
     }
 
     private func restorePosition() {
-        if let saved = positionStore.loadPosition() {
+        let currentScreen = NSScreen.main ?? NSScreen.screens[0]
+        let screenId = ScreenUtility.generateScreenIdentifier(for: currentScreen)
+
+        if let saved = positionStore.loadPosition(for: screenId) {
             setFrameOrigin(saved)
+        } else if let legacyPos = positionStore.loadLegacyPosition() {
+            // Migrate legacy position to new format
+            positionStore.migrateToScreenSpecific(for: screenId)
+            setFrameOrigin(legacyPos)
         } else {
             setFrameOrigin(Self.defaultOrigin())
         }
@@ -46,14 +55,19 @@ final class CharacterWindow: NSWindow {
 
     func ensureOnScreen() {
         let origin = frame.origin
+
         if !ScreenUtility.isPointOnAnyScreen(origin) {
             let safeFrame = ScreenUtility.nearestScreenFrame(to: origin)
             let safeOrigin = CGPoint(
-                x: min(origin.x, safeFrame.maxX - frame.width),
-                y: min(origin.y, safeFrame.maxY - frame.height)
+                x: max(safeFrame.minX, min(origin.x, safeFrame.maxX - frame.width)),
+                y: max(safeFrame.minY, min(origin.y, safeFrame.maxY - frame.height))
             )
             setFrameOrigin(safeOrigin)
-            savePosition()
+
+            // Update stored position for current screen
+            let currentScreen = NSScreen.screens.first(where: { $0.frame.contains(safeOrigin) }) ?? NSScreen.main!
+            let screenId = ScreenUtility.generateScreenIdentifier(for: currentScreen)
+            positionStore.save(position: safeOrigin, for: screenId)
         }
     }
 
