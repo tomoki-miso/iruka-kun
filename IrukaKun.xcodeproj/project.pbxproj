@@ -8,13 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		10C67E41B5FAC2B24F2BAEE2 /* WorkHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A5EA4C0F1F671D6E5837A8 /* WorkHistoryStore.swift */; };
+		16FBAA1398BD85A8F868F93E /* ExportManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22948C7FB3FF9297E05BD610 /* ExportManagerTests.swift */; };
 		20023B197F908C8E09A2A914 /* dismiss-explain.sh in Resources */ = {isa = PBXBuildFile; fileRef = 7D4740DCEA7A58C070A0301F /* dismiss-explain.sh */; };
 		20A1F1D7E75CECAE9892EB1E /* explain-command.sh in Resources */ = {isa = PBXBuildFile; fileRef = 087B9140DBA80637B01BA8F2 /* explain-command.sh */; };
 		252EBF1FD0CDECB9D184F86F /* WorkTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCACEF3CAAB55150BCB5B2B /* WorkTracker.swift */; };
+		2AAFDD25F70AECF002913F9C /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF36DA077DAC362962E4A668 /* CalendarManager.swift */; };
 		2C46C5E7A204819D4541650D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0988347F8D32103C493941 /* AppDelegate.swift */; };
 		32061AA0975F4889B5FA7925 /* CharacterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0365A0E37337C360207D1E14 /* CharacterType.swift */; };
 		3B273943A0999FFFB6BDAF56 /* surprised.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2EE043211C9C42F55BCCD57B /* surprised.mp3 */; };
 		3B407FCD4C01FEF258AC56CD /* MeigenHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71EF634CF432B8AAB1874C6 /* MeigenHistoryStore.swift */; };
+		3C7C3EAD9F7B58ED139EB554 /* CalendarManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ED74F58045B123F24ADEB7 /* CalendarManagerTests.swift */; };
 		4037CEA7E9A7CE3A8C6AAB1F /* PositionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971EEBE20FB8A2A2E42A5556 /* PositionStoreTests.swift */; };
 		4724AF59053BDA9345083F12 /* IrukaKunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DDC50FC7524C15CBB70D6B /* IrukaKunTests.swift */; };
 		4945AC894695FA38B82D85AD /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C595BA1A3EC9D90019498507 /* SettingsWindowController.swift */; };
@@ -47,6 +50,7 @@
 		BC2901D7CC29293DD5CFA628 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14D62A0785D70E6D52AA533 /* SettingsView.swift */; };
 		BCF72AF74F441239F7604A7D /* StateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8575AE916E0FD0435395F8 /* StateMachineTests.swift */; };
 		C49F9DEB671B810A09CC6A27 /* Dialogues.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A663F7C23BC562FD0778DAE /* Dialogues.json */; };
+		C74099567B2124082ED80B8A /* ExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8D2D6A7D1DAAC70B885149 /* ExportManager.swift */; };
 		C8FDC070ACAEB4638F1EB4B9 /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738E61381E45DEA0F7402BD /* TimeOfDay.swift */; };
 		C991FBDC2FB7F2CBE0AADCD4 /* sleep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 65F8115F01213A7350B8325A /* sleep.mp3 */; };
 		CC5BDA5FF0E75A30E7DD485A /* ono_idle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = ADF0384259EE355B1DB7A298 /* ono_idle_0.png */; };
@@ -85,6 +89,7 @@
 		06E0806E96FCBF1953927B68 /* WorkTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTrackerTests.swift; sourceTree = "<group>"; };
 		07C3ADAD1FD312D2827E58E0 /* CPUMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUMonitor.swift; sourceTree = "<group>"; };
 		087B9140DBA80637B01BA8F2 /* explain-command.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "explain-command.sh"; sourceTree = "<group>"; };
+		08ED74F58045B123F24ADEB7 /* CalendarManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManagerTests.swift; sourceTree = "<group>"; };
 		093D0D9D4AE2EBFAA2B20400 /* WorkHistoryStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHistoryStoreTests.swift; sourceTree = "<group>"; };
 		093E98479E61236346B08283 /* IrukaKunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IrukaKunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FCACEF3CAAB55150BCB5B2B /* WorkTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTracker.swift; sourceTree = "<group>"; };
@@ -93,12 +98,14 @@
 		19A5EA4C0F1F671D6E5837A8 /* WorkHistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHistoryStore.swift; sourceTree = "<group>"; };
 		1E8B50A46531626FF870CA3D /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		2063FCD01D68549A4D6F0BFF /* CharacterWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterWindow.swift; sourceTree = "<group>"; };
+		22948C7FB3FF9297E05BD610 /* ExportManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportManagerTests.swift; sourceTree = "<group>"; };
 		28413A08DF8736F3A32D445B /* MeigenHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeigenHistoryView.swift; sourceTree = "<group>"; };
 		2A1D2071564CB99F5362AE80 /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 		2EE043211C9C42F55BCCD57B /* surprised.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = surprised.mp3; sourceTree = "<group>"; };
 		310AAF4B61A6319970E3D9DE /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		3566C17FA493A4681918F5C7 /* StateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
 		3738E61381E45DEA0F7402BD /* TimeOfDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOfDay.swift; sourceTree = "<group>"; };
+		3A8D2D6A7D1DAAC70B885149 /* ExportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportManager.swift; sourceTree = "<group>"; };
 		3AC849DD357FF0467CBC56B1 /* WorkHistoryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHistoryWindowController.swift; sourceTree = "<group>"; };
 		3B1346570F1A5E89C9F2296A /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
 		411EA5113605FF7A3B410190 /* IrukaKun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IrukaKun.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +131,7 @@
 		B1385AA354494CAA22DB9167 /* ReportWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportWindowController.swift; sourceTree = "<group>"; };
 		B6183D7C6F25B2C52C138F7B /* iruka_idle_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iruka_idle_0.png; sourceTree = "<group>"; };
 		B97117BCB3807F572B3D92E0 /* background_music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background_music.mp3; sourceTree = "<group>"; };
+		BF36DA077DAC362962E4A668 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		C561C962AA2F39E5309AAC48 /* WorkTimerOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTimerOverlay.swift; sourceTree = "<group>"; };
 		C595BA1A3EC9D90019498507 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		C71EF634CF432B8AAB1874C6 /* MeigenHistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeigenHistoryStore.swift; sourceTree = "<group>"; };
@@ -217,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				310AAF4B61A6319970E3D9DE /* AudioManager.swift */,
+				BF36DA077DAC362962E4A668 /* CalendarManager.swift */,
 				E9B2827AD80FA08E36E28B4B /* CharacterStore.swift */,
 				521032D82F6156183C13EC46 /* CommandExplainWatcher.swift */,
 				07C3ADAD1FD312D2827E58E0 /* CPUMonitor.swift */,
@@ -234,6 +243,7 @@
 		7753E79BA1DF0012259B24DA /* WorkTracker */ = {
 			isa = PBXGroup;
 			children = (
+				3A8D2D6A7D1DAAC70B885149 /* ExportManager.swift */,
 				55C5D91B70312DD14CB3B028 /* ReportGenerator.swift */,
 				1E8B50A46531626FF870CA3D /* ReportView.swift */,
 				B1385AA354494CAA22DB9167 /* ReportWindowController.swift */,
@@ -266,7 +276,9 @@
 			isa = PBXGroup;
 			children = (
 				73948D37449A2C8052300678 /* AudioManagerTests.swift */,
+				08ED74F58045B123F24ADEB7 /* CalendarManagerTests.swift */,
 				681D9C8436B936B7707E7E6A /* DialogueManagerTests.swift */,
+				22948C7FB3FF9297E05BD610 /* ExportManagerTests.swift */,
 				76DDC50FC7524C15CBB70D6B /* IrukaKunTests.swift */,
 				971EEBE20FB8A2A2E42A5556 /* PositionStoreTests.swift */,
 				F4A7AADBB819063D9DD01854 /* ReportGeneratorTests.swift */,
@@ -414,6 +426,7 @@
 				E3DA26022295275ED5073D73 /* AudioManager.swift in Sources */,
 				4C0F2F93BEE082FE5C4BA325 /* BubbleView.swift in Sources */,
 				E15C43C0CA1B115E292315CC /* CPUMonitor.swift in Sources */,
+				2AAFDD25F70AECF002913F9C /* CalendarManager.swift in Sources */,
 				B67AAD77F857D10ACD250EB0 /* CharacterController.swift in Sources */,
 				528722FD1BED7E816DCA91F7 /* CharacterState.swift in Sources */,
 				D8BD6BB4EFA32720BF29BF7E /* CharacterStore.swift in Sources */,
@@ -423,6 +436,7 @@
 				CD05421C4036C1544735A8C1 /* CommandExplainWatcher.swift in Sources */,
 				A7695C61654EC54ADBC6D968 /* CustomCharacterManager.swift in Sources */,
 				EA29BA8640DC7870A2803340 /* DialogueManager.swift in Sources */,
+				C74099567B2124082ED80B8A /* ExportManager.swift in Sources */,
 				73005BED8B32F125A94EBAC4 /* HookInstaller.swift in Sources */,
 				B51AF5271CA943F840311037 /* MeigenFetcher.swift in Sources */,
 				3B407FCD4C01FEF258AC56CD /* MeigenHistoryStore.swift in Sources */,
@@ -454,7 +468,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF08FE81597709D983E1B6EE /* AudioManagerTests.swift in Sources */,
+				3C7C3EAD9F7B58ED139EB554 /* CalendarManagerTests.swift in Sources */,
 				B9B790A29644CD10136E0A79 /* DialogueManagerTests.swift in Sources */,
+				16FBAA1398BD85A8F868F93E /* ExportManagerTests.swift in Sources */,
 				4724AF59053BDA9345083F12 /* IrukaKunTests.swift in Sources */,
 				4037CEA7E9A7CE3A8C6AAB1F /* PositionStoreTests.swift in Sources */,
 				FC27317F31F38FCF86EF277B /* ReportGeneratorTests.swift in Sources */,
