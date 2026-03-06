@@ -269,6 +269,22 @@ defaults delete com.misoshiru.iruka-kun window_position_y
 - FileManager integration for file operations
 - Format: Documents/iruka-work-{type}-{timestamp}.{format}
 
+
+### v0.7.0 (2026-03-06) — Calendar Integration
+
+**Features:**
+- iCalendar format export of work history
+- Calendar event generation with metadata
+- Support for external calendar applications
+- Automatic event naming and timestamping
+
+**Test Coverage:** 78/78 tests (100%)
+
+**Technical Details:**
+- CalendarManager with iCalendar (RFC 5545) compliance
+- UID generation and timestamp management
+- Text escaping for special characters
+
 ## Contributing
 
 1. Fork repository
@@ -305,4 +321,4 @@ MIT License — See LICENSE file
 
 **Made with ❤️ by misoshiru**
 
-Current Version: 0.6.0
+Current Version: 0.7.0
