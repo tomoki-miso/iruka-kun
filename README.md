@@ -253,6 +253,22 @@ defaults delete com.misoshiru.iruka-kun window_position_y
 - Backward compatible with v0.4.0 legacy position format
 - Auto-migration on first launch in multi-monitor environment
 
+
+### v0.6.0 (2026-03-06) — Export Features
+
+**Features:**
+- CSV export of work history
+- JSON export for data analysis
+- Automatic file naming with timestamps
+- Documents folder integration
+
+**Test Coverage:** 74/74 tests (100%)
+
+**Technical Details:**
+- ExportManager with JSON/CSV converters
+- FileManager integration for file operations
+- Format: Documents/iruka-work-{type}-{timestamp}.{format}
+
 ## Contributing
 
 1. Fork repository
@@ -289,4 +305,4 @@ MIT License — See LICENSE file
 
 **Made with ❤️ by misoshiru**
 
-Current Version: 0.5.0
+Current Version: 0.6.0

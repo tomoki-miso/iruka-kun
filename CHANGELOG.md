@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2026-03-06
+
+### Added
+- **Export Features**
+  - CSV export of work history
+  - JSON export with nested structure
+  - Automatic file naming with ISO8601 timestamps
+  - File saving to Documents folder
+
+### Technical
+- ExportManager.swift: CSV and JSON formatters
+- FileManager integration for persistent file operations
+- Support for work data serialization
+
+### Test Coverage
+- Added 4 new tests for export functionality
+- Total: 74/74 tests (100% pass rate)
+
 ## [0.5.0] - 2026-03-06
 
 ### Added
